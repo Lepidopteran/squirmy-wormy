@@ -23,7 +23,7 @@ loom {
 	splitEnvironmentSourceSets()
 
 	mods {
-		"worms" {
+		"squirmy_wormy" {
 			sourceSet sourceSets.main
 			sourceSet sourceSets.client
 		}

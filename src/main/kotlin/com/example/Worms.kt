@@ -16,6 +16,7 @@ import net.minecraft.registry.Registry
 import net.minecraft.util.Identifier
 import org.slf4j.LoggerFactory
 
+const val MOD_ID = "squirmy_wormy"
 
 object ModItems {
 
@@ -41,7 +42,7 @@ object ModItems {
 
     fun register(item: Item, id: String): Item {
         // Create the identifier for the item.
-        val itemID = Identifier("worms", id)
+        val itemID = Identifier(MOD_ID, id)
 
         // Register the item.
         val registeredItem = Registry.register(Registries.ITEM, itemID, item)
@@ -52,7 +53,7 @@ object ModItems {
 }
 
 object Worms : ModInitializer {
-    private val logger = LoggerFactory.getLogger("worms")
+    private val logger = LoggerFactory.getLogger(MOD_ID)
 
     override fun onInitialize() {
         ModItems.initialize()

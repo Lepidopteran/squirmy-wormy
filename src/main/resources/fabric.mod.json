@@ -1,9 +1,9 @@
 {
 	"schemaVersion": 1,
-	"id": "worms",
+	"id": "squirmy_wormy",
 	"version": "${version}",
-	"name": "Worms",
-	"description": "A Minecraft mod that should not give you worms",
+	"name": "Squirmy Wormy",
+	"description": "A Minecraft mod that gives you worms",
 	"authors": [
 		"Me!"
 	],
@@ -12,7 +12,7 @@
 		"sources": "https://github.com/FabricMC/fabric-example-mod"
 	},
 	"license": "MIT",
-	"icon": "assets/worms/icon.png",
+	"icon": "assets/squirmy_wormy/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
