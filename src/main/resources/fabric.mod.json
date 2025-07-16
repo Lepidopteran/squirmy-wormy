@@ -16,28 +16,16 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			{
-				"value": "com.example.Worms",
-				"adapter": "kotlin"
-			}
+			"dancesaurus.squirmy_wormy.SquirmyWormy"
 		],
 		"client": [
-			{
-				"value": "com.example.WormsClient",
-				"adapter": "kotlin"
-			}
-		],
-		"fabric-datagen": [
-			{
-				"value": "com.example.WormsDataGenerator",
-				"adapter": "kotlin"
-			}
+			"dancesaurus.squirmy_wormy.SquirmyWormyClient"
 		]
 	},
 	"mixins": [
-		"worms.mixins.json",
+		"squirmy_wormy.mixins.json",
 		{
-			"config": "worms.client.mixins.json",
+			"config": "squirmy_wormy.client.mixins.json",
 			"environment": "client"
 		}
 	],
@@ -45,8 +33,7 @@
 		"fabricloader": ">=0.16.14",
 		"minecraft": "~1.20.1",
 		"java": ">=17",
-		"fabric-api": "*",
-		"fabric-language-kotlin": "*"
+		"fabric-api": "*"
 	},
 	"suggests": {
 		"another-mod": "*"
