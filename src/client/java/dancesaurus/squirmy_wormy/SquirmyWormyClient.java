@@ -12,6 +12,7 @@ public class SquirmyWormyClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		EntityRendererRegistry.register(SquirmyWormy.EARTHWORM, EarthwormRenderer::new);
+		EntityRendererRegistry.register(SquirmyWormy.GLOW_WORM, GlowWormRenderer::new);
 		// This entrypoint is suitable for setting up client-specific logic, such as rendering.
 	}
 }
