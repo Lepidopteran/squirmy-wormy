@@ -1,5 +1,6 @@
 package dancesaurus.squirmy_wormy;
 
+import dancesaurus.squirmy_wormy.Blocks.ModBlocks;
 import dancesaurus.squirmy_wormy.entities.Earthworm;
 import net.fabricmc.api.ModInitializer;
 
@@ -26,6 +27,7 @@ public class SquirmyWormy implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		ModItems.initialize();
+		ModBlocks.initialize();
 
 		FabricDefaultAttributeRegistry.register(EARTHWORM, Earthworm.createAttributes());
 		LOGGER.info("The worms have been released...");
