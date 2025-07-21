@@ -12,12 +12,31 @@
 			},
 			"bones": [
 				{
-					"name": "bone",
+					"name": "stretchbone",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "wigglebonebody",
+					"parent": "stretchbone",
 					"pivot": [0, 0, 0],
 					"cubes": [
-						{"origin": [0.5, 0, -1.5], "size": [1, 1, 3], "uv": [0, 4]},
-						{"origin": [0, 0, 1.5], "size": [1, 1, 3], "uv": [0, 8]},
+						{"origin": [0, 0, -1.5], "size": [1, 1, 3], "uv": [0, 4]}
+					]
+				},
+				{
+					"name": "wigglebonehead",
+					"parent": "stretchbone",
+					"pivot": [0, 0, 0],
+					"cubes": [
 						{"origin": [0, 0, -4.5], "size": [1, 1, 3], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "wigglebonebutt",
+					"parent": "stretchbone",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{"origin": [0, 0, 1.5], "size": [1, 1, 3], "uv": [0, 8]}
 					]
 				}
 			]
