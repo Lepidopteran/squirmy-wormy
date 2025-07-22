@@ -5,9 +5,11 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.FoxEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -40,9 +42,11 @@ public class Earthworm extends AnimalEntity implements GeoEntity {
         this.goalSelector.add(3, new TemptGoal(this, 1.25D, Ingredient.ofItems(Items.DIRT), false));
         this.goalSelector.add(4, new LookAtEntityGoal(this, PlayerEntity.class, 4.0F));
         this.goalSelector.add(1, new AttackGoal(this));
-        this.targetSelector.add(1, new ActiveTargetGoal<>(this, ZombieEntity.class, false));
+        this.targetSelector.add(1, new ActiveTargetGoal<>(this, ZombieEntity.class, true));
         this.goalSelector.add(5, new LookAroundGoal(this));
+
     }
+
 
 
 
