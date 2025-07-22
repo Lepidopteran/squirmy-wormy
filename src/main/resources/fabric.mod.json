@@ -15,9 +15,6 @@
 	"icon": "assets/squirmy_wormy/icon.png",
 	"environment": "*",
 	"entrypoints": {
-		"fabric-datagen": [
-			"dancesaurus.squirmy_wormy.DataGenerator"
-		],
 		"main": [
 			"dancesaurus.squirmy_wormy.SquirmyWormy"
 		],
