@@ -3,11 +3,12 @@
   "pools": [
     {
       "rolls": 1,
-      "entries": [{
-        "type": {
-
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "squirmy_wormy:earthworm",
+          "weight": 1
         }
-      }
       ]
     }
   ]
