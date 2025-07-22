@@ -1,6 +1,5 @@
 package dancesaurus.squirmy_wormy;
 
-import dancesaurus.squirmy_wormy.Blocks.ModBlocks;
 import dancesaurus.squirmy_wormy.entities.Earthworm;
 import dancesaurus.squirmy_wormy.entities.GlowWorm;
 import net.fabricmc.api.ModInitializer;
