@@ -6,6 +6,7 @@ import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -34,12 +35,16 @@ public class Earthworm extends AnimalEntity implements GeoEntity {
 
     @Override
     protected void initGoals() {
-        this.goalSelector.add(1, new WanderAroundFarGoal(this, 0.5D));
+        this.goalSelector.add(1, new WanderAroundGoal(this, 0.5D));
         this.goalSelector.add(2, new AnimalMateGoal(this, 1.15D));
         this.goalSelector.add(3, new TemptGoal(this, 1.25D, Ingredient.ofItems(Items.DIRT), false));
         this.goalSelector.add(4, new LookAtEntityGoal(this, PlayerEntity.class, 4.0F));
+        this.goalSelector.add(1, new AttackGoal(this));
+        this.targetSelector.add(1, new ActiveTargetGoal<>(this, ZombieEntity.class, false));
         this.goalSelector.add(5, new LookAroundGoal(this));
     }
+
+
 
     @Nullable
     @Override
@@ -70,7 +75,8 @@ public class Earthworm extends AnimalEntity implements GeoEntity {
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 1)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.1)
-                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 20);
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.2)
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 20)
+                .add(EntityAttributes. GENERIC_ATTACK_DAMAGE, .1);
     }
 }
