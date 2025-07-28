@@ -3,7 +3,7 @@
 	"animations": {
 		"glow_worm_wiggle": {
 			"loop": true,
-			"animation_length": 1.5,
+			"animation_length": 1.4167,
 			"bones": {
 				"stretchbone": {
 					"scale": {
@@ -69,13 +69,13 @@
 							},
 							"lerp_mode": "catmullrom"
 						},
-						"0.0417": {
+						"0.25": {
 							"post": {
 								"vector": [-2.5, 0.31975, 0]
 							},
 							"lerp_mode": "catmullrom"
 						},
-						"0.4167": {
+						"0.5833": {
 							"post": {
 								"vector": [0, 2.5, 0]
 							},
@@ -87,13 +87,13 @@
 							},
 							"lerp_mode": "catmullrom"
 						},
-						"1.125": {
+						"1.1667": {
 							"post": {
 								"vector": [0, -3.3, 0]
 							},
 							"lerp_mode": "catmullrom"
 						},
-						"1.4583": {
+						"1.4167": {
 							"post": {
 								"vector": [0, 0, 0]
 							},
@@ -127,7 +127,7 @@
 							},
 							"lerp_mode": "catmullrom"
 						},
-						"1.0833": {
+						"1.0417": {
 							"post": {
 								"vector": [0, 2.5, 0]
 							},
