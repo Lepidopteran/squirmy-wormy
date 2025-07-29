@@ -28,6 +28,16 @@ public class ModItems {
             "earthworm"
     );
 
+    public static final Item FRIED_WORM = register(
+            new Item(new FabricItemSettings()
+                    .food(new FoodComponent.Builder()
+                            .snack()
+                            .hunger(1)
+                            .statusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 6 * 20, 1), 1.0f)
+                            .build())),
+            "fried_worm"
+    );
+
     public static final Item EARTHWORM_SPAWN_EGG = register(new SpawnEggItem(
             SquirmyWormy.EARTHWORM,
             0xc4c4c4,
@@ -51,6 +61,13 @@ public class ModItems {
                 entries.add(EARTHWORM);
             }
         );
+
+        ItemGroupEvents
+                .modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK)
+                .register((FabricItemGroupEntries entries) -> {
+                            entries.add(FRIED_WORM);
+                        }
+                );
 
         ItemGroupEvents
             .modifyEntriesEvent(ItemGroups.SPAWN_EGGS)
