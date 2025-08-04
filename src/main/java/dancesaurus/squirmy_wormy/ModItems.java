@@ -40,15 +40,15 @@ public class ModItems {
 
     public static final Item EARTHWORM_SPAWN_EGG = register(new SpawnEggItem(
             SquirmyWormy.EARTHWORM,
-            0xc4c4c4,
-            0xadadad,
+            0xaf437c,
+            0xaf437c,
             new FabricItemSettings()
     ), "earthworm_spawn_egg");
 
     public static final Item GLOW_WORM_SPAWN_EGG = register(new SpawnEggItem(
             SquirmyWormy.GLOW_WORM,
-            0xc4c4c4,
-            0xadadad,
+            0x9df4af,
+            0x1fcdc5,
             new FabricItemSettings()
     ), "glow_worm_spawn_egg");
 
