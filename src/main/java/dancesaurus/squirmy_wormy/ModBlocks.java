@@ -1,5 +1,6 @@
 package dancesaurus.squirmy_wormy;
 
+import dancesaurus.squirmy_wormy.blocks.GlowWormWeb;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
@@ -15,7 +16,7 @@ import net.minecraft.util.Identifier;
 public class ModBlocks {
 
     public static final Block GLOW_WORM_WEB = register(
-            new Block(AbstractBlock.Settings.create().nonOpaque().burnable()), "glow_worm_web", true);
+            new GlowWormWeb(AbstractBlock.Settings.create().nonOpaque().burnable()), "glow_worm_web", true);
 
     public static Block register(Block block, String name, boolean shouldRegisterItem) {
         // Register the block and its item.
