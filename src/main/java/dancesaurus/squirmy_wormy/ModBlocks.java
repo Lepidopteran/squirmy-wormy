@@ -6,17 +6,20 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.BlockView;
 
 public class ModBlocks {
 
     public static final Block GLOW_WORM_WEB = register(
-            new GlowWormWeb(AbstractBlock.Settings.create().nonOpaque().burnable()), "glow_worm_web", true);
+            new GlowWormWeb(AbstractBlock.Settings.create().noCollision().strength(4.0f).emissiveLighting(ModBlocks::always).luminance(value -> 1).nonOpaque().burnable()), "glow_worm_web", true);
 
     public static Block register(Block block, String name, boolean shouldRegisterItem) {
         // Register the block and its item.
@@ -40,5 +43,8 @@ public class ModBlocks {
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL)
                 .register((FabricItemGroupEntries entries) -> entries.add(GLOW_WORM_WEB));
+    }
+    private static boolean always(BlockState state, BlockView world, BlockPos pos){
+        return true;
     }
 }

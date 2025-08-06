@@ -15,7 +15,7 @@ public class SquirmyWormyClient implements ClientModInitializer {
 	public void onInitializeClient() {
 		EntityRendererRegistry.register(SquirmyWormy.EARTHWORM, EarthwormRenderer::new);
 		EntityRendererRegistry.register(SquirmyWormy.GLOW_WORM, GlowWormRenderer::new);
-		BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.GLOW_WORM_WEB, RenderLayer.getCutout());	
+		BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.GLOW_WORM_WEB, RenderLayer.getTranslucent());
 		// This entrypoint is suitable for setting up client-specific logic, such as rendering.
 	}
 }
