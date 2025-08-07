@@ -1,5 +1,6 @@
 {
   "variants": {
-    "": { "model": "squirmy_wormy:block/glow_worm_web" }
+    "segment=middle": { "model": "squirmy_wormy:block/glow_worm_web" },
+    "segment=tip": {"model": "squirmy_wormy:block/glow_worm_web_tip"  }
   }
 }
