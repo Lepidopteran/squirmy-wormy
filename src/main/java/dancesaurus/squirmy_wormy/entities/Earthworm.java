@@ -2,7 +2,9 @@ package dancesaurus.squirmy_wormy.entities;
 
 import dancesaurus.squirmy_wormy.SquirmyWormy;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ai.control.JumpControl;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -33,6 +35,20 @@ public class Earthworm extends AnimalEntity implements GeoEntity {
 
     public Earthworm (EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
+
+        this.jumpControl = new JumpControl(this) {
+
+            @Override
+            public void tick() {
+            }
+
+            @Override
+            public void setActive() {
+                super.setActive();
+            }
+        };
+
+        this.setPathfindingPenalty(PathNodeType.WALKABLE, 0.0F);
     }
 
     @Override
@@ -76,11 +92,25 @@ public class Earthworm extends AnimalEntity implements GeoEntity {
         return stack.isOf(Items.DIRT);
     }
 
+    @Override
+    public boolean isClimbing() {
+        return super.horizontalCollision;
+    }
+
+    @Override
+    public void tickMovement() {
+        super.tickMovement();
+
+        if (this.isClimbing()) {
+            this.setVelocity(this.getVelocity().add(0.0D, 0.005D, 0.0D));
+        }
+    }
+
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 1)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.2)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 20)
-                .add(EntityAttributes. GENERIC_ATTACK_DAMAGE, .1);
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, .1);
     }
 }
