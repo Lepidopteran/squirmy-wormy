@@ -18,11 +18,13 @@ import java.util.Locale;
 @SuppressWarnings("deprecation")
 
 public class GlowWormWeb extends Block {
+	public static final EnumProperty<SegmentType> SEGMENT = EnumProperty.of("segment", SegmentType.class);
+	public static final int MINIMUM_AIR_GAP = 5;
+
 	public GlowWormWeb(Settings settings) {
 		super(settings);
 		setDefaultState(this.getDefaultState().with(SEGMENT, SegmentType.TIP));
 	}
-	public static final EnumProperty<SegmentType> SEGMENT = EnumProperty.of("segment", SegmentType.class);
 
 	@Override
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
@@ -53,6 +55,31 @@ public class GlowWormWeb extends Block {
 		}
 
 		return state;
+	}
+
+	@Override
+	public boolean hasRandomTicks(BlockState state) {
+		return true;
+	}
+
+	@Override
+	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+		if (state.get(SEGMENT) != SegmentType.TIP) {
+			return;
+		}
+
+		boolean canGrow = true;
+		for (int index = 1; index <= MINIMUM_AIR_GAP; index++) {
+			BlockPos blockPos = pos.down(index);
+			if (!world.isAir(blockPos)) {
+				canGrow = false;
+				break;
+			}
+		}
+
+		if (canGrow) {
+			world.setBlockState(pos.down(), this.getDefaultState());
+		}
 	}
 
 	@Override
