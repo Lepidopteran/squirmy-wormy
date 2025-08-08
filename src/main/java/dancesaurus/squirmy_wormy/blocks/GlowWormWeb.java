@@ -19,7 +19,7 @@ import java.util.Locale;
 
 public class GlowWormWeb extends Block {
 	public static final EnumProperty<SegmentType> SEGMENT = EnumProperty.of("segment", SegmentType.class);
-	public static final int MINIMUM_AIR_GAP = 5;
+	public static final int MINIMUM_AIR_GAP = 15;
 
 	public GlowWormWeb(Settings settings) {
 		super(settings);
