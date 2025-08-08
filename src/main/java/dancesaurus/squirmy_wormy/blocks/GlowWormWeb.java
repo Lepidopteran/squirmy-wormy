@@ -20,6 +20,7 @@ import java.util.Locale;
 public class GlowWormWeb extends Block {
 	public static final EnumProperty<SegmentType> SEGMENT = EnumProperty.of("segment", SegmentType.class);
 	public static final int MINIMUM_AIR_GAP = 15;
+	public static final float GROWTH_RATE = 0.01f;
 
 	public GlowWormWeb(Settings settings) {
 		super(settings);
@@ -64,7 +65,7 @@ public class GlowWormWeb extends Block {
 
 	@Override
 	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-		if (state.get(SEGMENT) != SegmentType.TIP) {
+		if (state.get(SEGMENT) != SegmentType.TIP || random.nextFloat() >= GROWTH_RATE) {
 			return;
 		}
 
