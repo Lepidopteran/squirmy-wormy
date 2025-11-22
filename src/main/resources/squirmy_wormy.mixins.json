@@ -3,7 +3,8 @@
 	"package": "dancesaurus.squirmy_wormy.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
-		"ZombieMixin"
+		"ZombieMixin",
+		"EntityMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
