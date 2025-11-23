@@ -18,12 +18,14 @@ abstract class ShearsMixin {
   @Inject(method = "getMiningSpeedMultiplier", at = @At("RETURN"), cancellable = true)
   private void onGetMiningSpeedMultiplier(ItemStack stack, BlockState state, CallbackInfoReturnable<Float> info) {
     // Checks weather minecraft already speeds up the value
-    if (info.getReturnValueF() == 1.0f) {
+    if (info.getReturnValueF() == 1.0f)
       // TODO: Make glow worm web mine faster. Possibly adding another if statement or adding an else if statement.
-      if (state.isOf(ModBlocks.GLOW_WORM_WEB) || state.isOf(ModBlocks.GLOW_WORM_WOOL)) {
+      if (state.isOf(ModBlocks.GLOW_WORM_WOOL)) {
         info.setReturnValue(5.0f);
+      } else if (state.isOf(ModBlocks.GLOW_WORM_WEB)) {
+        info.setReturnValue(15.0f);
       }
-    }
   }
 }
+
 
