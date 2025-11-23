@@ -28,7 +28,7 @@ public class ModBlocks {
                   .luminance(value -> 1)
                   .nonOpaque()
                   .burnable()), "glow_worm_web", true
-                                                    );
+  );
 
   public static final Block GLOW_WORM_WOOL = register(
           new Block(AbstractBlock.Settings
@@ -38,7 +38,7 @@ public class ModBlocks {
                   .emissiveLighting(ModBlocks::always)
                   .luminance(value -> 1)
                   .burnable()), "glow_worm_wool", true
-                                                     );
+  );
 
   public static Block register(Block block, String name, boolean shouldRegisterItem) {
     // Register the block and its item.
