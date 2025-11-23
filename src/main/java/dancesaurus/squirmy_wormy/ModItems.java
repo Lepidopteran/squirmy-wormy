@@ -27,6 +27,12 @@ public class ModItems {
             "earthworm"
     );
 
+    public static final Item GLOW_WORM_SILK = register(
+            new Item(new FabricItemSettings()),
+
+            "glow_worm_silk"
+    );
+
     public static final Item FRIED_WORM = register(
             new Item(new FabricItemSettings()
                     .food(new FoodComponent.Builder()
@@ -75,6 +81,12 @@ public class ModItems {
                 entries.add(GLOW_WORM_SPAWN_EGG);
             }
         );
+
+        ItemGroupEvents
+                .modifyEntriesEvent(ItemGroups.INGREDIENTS)
+                .register((FabricItemGroupEntries entries) -> {
+                    entries.add(GLOW_WORM_SILK);
+                });
     }
 
     public static Item register(Item item, String id) {
