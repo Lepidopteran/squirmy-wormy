@@ -19,11 +19,11 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Random;
 
-import static dancesaurus.squirmy_wormy.ModInfo.MOD_ID;
+import static dancesaurus.squirmy_wormy.SquirmyWormy.MOD_ID;
 
 public class SquirmyWormy implements ModInitializer {
+  public static final String MOD_ID = "squirmy_wormy";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-
 	public static final EntityType<Earthworm> EARTHWORM = Registry.register(
 		Registries.ENTITY_TYPE,
 		Identifier.of(MOD_ID, "earthworm"),

@@ -42,7 +42,7 @@ public class ModBlocks {
 
   public static Block register(Block block, String name, boolean shouldRegisterItem) {
     // Register the block and its item.
-    Identifier id = new Identifier(ModInfo.MOD_ID, name);
+    Identifier id = new Identifier(SquirmyWormy.MOD_ID, name);
 
 
     // Sometimes, you may not want to register an item for the block.

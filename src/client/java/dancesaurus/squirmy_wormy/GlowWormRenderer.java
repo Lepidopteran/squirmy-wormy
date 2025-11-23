@@ -14,7 +14,7 @@ import software.bernie.geckolib.renderer.layer.AutoGlowingGeoLayer;
 public class GlowWormRenderer extends GeoEntityRenderer<GlowWorm> {
 
 	public GlowWormRenderer(EntityRendererFactory.Context context) {
-		super(context, new DefaultedEntityGeoModel<>(new Identifier(ModInfo.MOD_ID, "glow_worm")));
+		super(context, new DefaultedEntityGeoModel<>(new Identifier(SquirmyWormy.MOD_ID, "glow_worm")));
 		addRenderLayer(new AutoGlowingGeoLayer<>(this));
 	}
 

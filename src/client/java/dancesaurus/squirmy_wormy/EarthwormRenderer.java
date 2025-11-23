@@ -11,7 +11,7 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class EarthwormRenderer extends GeoEntityRenderer<Earthworm> {
 
     public EarthwormRenderer(EntityRendererFactory.Context context) {
-        super(context, new DefaultedEntityGeoModel<>(new Identifier(ModInfo.MOD_ID, "earthworm")));
+        super(context, new DefaultedEntityGeoModel<>(new Identifier(SquirmyWormy.MOD_ID, "earthworm")));
     }
 
     @Override
