@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": {
+      "item": "squirmy_wormy:glow_worm_silk"
+    }
+  },
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "result": {
+    "item": "squirmy_wormy:glow_worm_wool"
+  },
+  "show_notification": true
+}

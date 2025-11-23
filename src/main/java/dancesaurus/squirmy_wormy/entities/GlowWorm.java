@@ -64,7 +64,12 @@ public class GlowWorm extends AnimalEntity implements GeoEntity {
 
     @Override
     public boolean isBreedingItem(ItemStack stack) {
-        return stack.isOf(Items.DIRT);
+        return stack.isOf(Items.MUD);
+    }
+
+    @Override
+    public boolean isClimbing() {
+        return super.horizontalCollision;
     }
 
     public static DefaultAttributeContainer.Builder createAttributes() {
