@@ -10,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
@@ -19,6 +20,7 @@ public class ModBlocks {
   public static final Block GLOW_WORM_WEB = register(
           new GlowWormWeb(AbstractBlock.Settings
                   .create()
+                  .sounds(BlockSoundGroup.CORAL)
                   .noCollision()
                   .strength(1.0f)
                   .emissiveLighting(ModBlocks::always)
@@ -30,6 +32,7 @@ public class ModBlocks {
   public static final Block GLOW_WORM_WOOL = register(
           new Block(AbstractBlock.Settings
                   .create()
+                  .sounds(BlockSoundGroup.WOOL)
                   .mapColor(MapColor.LIGHT_BLUE)
                   .strength(1.0f)
                   .emissiveLighting(ModBlocks::always)
@@ -40,6 +43,7 @@ public class ModBlocks {
     public static final Block GLOWING_CARPET = register(
             new CarpetBlock(AbstractBlock.Settings
                     .create()
+                    .sounds(BlockSoundGroup.WOOL)
                     .mapColor(MapColor.LIGHT_BLUE)
                     .strength(1.0f)
                     .emissiveLighting(ModBlocks::always)
