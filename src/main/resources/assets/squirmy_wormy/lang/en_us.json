@@ -3,7 +3,8 @@
   "item.squirmy_wormy.earthworm_spawn_egg": "Earthworm Spawn Egg",
   "item.squirmy_wormy.glow_worm_spawn_egg": "Glow Worm Spawn Egg",
   "block.squirmy_wormy.glow_worm_web": "Glow Worm Web",
-  "block.squirmy_wormy.glow_worm_wool": "Glow Worm Wool",
+  "block.squirmy_wormy.glow_worm_wool": "Glow Wool",
+  "block.squirmy_wormy.glowing_carpet": "Glow Carpet",
   "item.squirmy_wormy.fried_worm": "Fried Worm",
   "item.squirmy_wormy.glow_worm_silk": "Glow Worm Silk"
 }

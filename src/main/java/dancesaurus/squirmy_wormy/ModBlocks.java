@@ -4,10 +4,7 @@ import dancesaurus.squirmy_wormy.blocks.GlowWormWeb;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.MapColor;
+import net.minecraft.block.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
@@ -40,6 +37,16 @@ public class ModBlocks {
                   .burnable()), "glow_worm_wool", true
   );
 
+    public static final Block GLOWING_CARPET = register(
+            new CarpetBlock(AbstractBlock.Settings
+                    .create()
+                    .mapColor(MapColor.LIGHT_BLUE)
+                    .strength(1.0f)
+                    .emissiveLighting(ModBlocks::always)
+                    .luminance(value -> 1)
+                    .burnable()), "glowing_carpet", true
+    );
+
   public static Block register(Block block, String name, boolean shouldRegisterItem) {
     // Register the block and its item.
     Identifier id = new Identifier(SquirmyWormy.MOD_ID, name);
@@ -63,8 +70,11 @@ public class ModBlocks {
             .modifyEntriesEvent(ItemGroups.NATURAL)
             .register((FabricItemGroupEntries entries) -> entries.add(GLOW_WORM_WEB));
     ItemGroupEvents
-            .modifyEntriesEvent(ItemGroups.NATURAL)
+            .modifyEntriesEvent(ItemGroups.COLORED_BLOCKS)
             .register((FabricItemGroupEntries entries) -> entries.add(GLOW_WORM_WOOL));
+      ItemGroupEvents
+              .modifyEntriesEvent(ItemGroups.COLORED_BLOCKS)
+              .register((FabricItemGroupEntries entries) -> entries.add(GLOWING_CARPET));
   }
 
   private static boolean always(BlockState state, BlockView world, BlockPos pos) {
