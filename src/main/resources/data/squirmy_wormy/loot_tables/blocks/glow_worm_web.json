@@ -46,7 +46,7 @@
                   "condition": "minecraft:survives_explosion"
                 }
               ],
-              "name": "minecraft:string"
+              "name": "squirmy_wormy:glow_worm_silk"
             }
           ]
         }
