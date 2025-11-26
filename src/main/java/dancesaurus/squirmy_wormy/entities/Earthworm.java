@@ -2,6 +2,7 @@ package dancesaurus.squirmy_wormy.entities;
 
 import dancesaurus.squirmy_wormy.SquirmyWormy;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.control.JumpControl;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.PathNodeType;
@@ -18,7 +19,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -63,8 +68,10 @@ public class Earthworm extends AnimalEntity implements GeoEntity {
 
     }
 
-
-
+    public static boolean earthWormSpawnRules(EntityType<Earthworm> entityType, @NotNull ServerWorldAccess world, SpawnReason reason, @NotNull BlockPos pos, Random random) {
+        // TODO: Make worms only spawn when raining
+        return true;
+    }
 
     @Nullable
     @Override

@@ -4,9 +4,12 @@ import dancesaurus.squirmy_wormy.entities.Earthworm;
 import dancesaurus.squirmy_wormy.entities.GlowWorm;
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.SpawnReason;
@@ -14,6 +17,8 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.Heightmap;
+import net.minecraft.world.biome.SpawnSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,38 +27,47 @@ import java.util.Random;
 import static dancesaurus.squirmy_wormy.SquirmyWormy.MOD_ID;
 
 public class SquirmyWormy implements ModInitializer {
-  public static final String MOD_ID = "squirmy_wormy";
-	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-	public static final EntityType<Earthworm> EARTHWORM = Registry.register(
-		Registries.ENTITY_TYPE,
-		Identifier.of(MOD_ID, "earthworm"),
-		EntityType.Builder.create(Earthworm::new, SpawnGroup.CREATURE).setDimensions(0.5f, 0.4f).build("earthworm")
-	);
+    public static final String MOD_ID = "squirmy_wormy";
+    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+    public static final EntityType<Earthworm> EARTHWORM = Registry.register(
+            Registries.ENTITY_TYPE,
+            Identifier.of(MOD_ID, "earthworm"),
+            EntityType.Builder.create(Earthworm::new, SpawnGroup.CREATURE).setDimensions(0.5f, 0.4f).build("earthworm")
+    );
 
-	public static final EntityType<GlowWorm> GLOW_WORM = Registry.register(
-			Registries.ENTITY_TYPE,
-			Identifier.of(MOD_ID, "glow_worm"),
-			EntityType.Builder.create(GlowWorm::new, SpawnGroup.CREATURE).setDimensions(0.5f, 0.4f).build("glow_worm")
-	);
+    public static final EntityType<GlowWorm> GLOW_WORM = Registry.register(
+            Registries.ENTITY_TYPE,
+            Identifier.of(MOD_ID, "glow_worm"),
+            EntityType.Builder.create(GlowWorm::new, SpawnGroup.CREATURE).setDimensions(0.5f, 0.4f).build("glow_worm")
+    );
 
-	@Override
-	public void onInitialize() {
-		ModItems.initialize();
-		ModBlocks.initialize();
+    @Override
+    public void onInitialize() {
+        ModItems.initialize();
+        ModBlocks.initialize();
 
-		FabricDefaultAttributeRegistry.register(EARTHWORM, Earthworm.createAttributes());
-		FabricDefaultAttributeRegistry.register(GLOW_WORM, GlowWorm.createAttributes());
+        FabricDefaultAttributeRegistry.register(EARTHWORM, Earthworm.createAttributes());
+        FabricDefaultAttributeRegistry.register(GLOW_WORM, GlowWorm.createAttributes());
 
-		PlayerBlockBreakEvents.AFTER.register(((world, playerEntity, blockPos, blockState, blockEntity) -> {
-			if (!world.isClient) {
-				Random random = new Random();
-				if (blockState.getBlock() == Blocks.DIRT && (random.nextFloat() <= 0.05)) {
-					ServerWorld serverWorld = (ServerWorld) world;
-					SquirmyWormy.EARTHWORM.spawn(serverWorld, blockPos, SpawnReason.TRIGGERED);
-				}
-			}
-		}));
+        // TODO: Make it so worms only can spawn in overworld
+        BiomeModifications.addSpawn(BiomeSelectors.all(), SpawnGroup.CREATURE, EARTHWORM, 1000, 1, 2);
+        SpawnRestriction.register(
+                EARTHWORM,
+                SpawnRestriction.Location.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING,
+                Earthworm::earthWormSpawnRules
+        );
 
-		LOGGER.info("The worms have been released...");
-	}
+        PlayerBlockBreakEvents.AFTER.register(((world, playerEntity, blockPos, blockState, blockEntity) -> {
+            if (!world.isClient) {
+                Random random = new Random();
+                if (blockState.getBlock() == Blocks.DIRT && (random.nextFloat() <= 0.05)) {
+                    ServerWorld serverWorld = (ServerWorld) world;
+                    SquirmyWormy.EARTHWORM.spawn(serverWorld, blockPos, SpawnReason.TRIGGERED);
+                }
+            }
+        }));
+
+        LOGGER.info("The worms have been released...");
+    }
 }
