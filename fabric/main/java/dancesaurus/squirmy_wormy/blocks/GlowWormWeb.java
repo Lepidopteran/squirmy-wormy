@@ -15,8 +15,6 @@ import net.minecraft.world.WorldView;
 
 import java.util.Locale;
 
-@SuppressWarnings("deprecation")
-
 public class GlowWormWeb extends Block {
 	public static final EnumProperty<SegmentType> SEGMENT = EnumProperty.of("segment", SegmentType.class);
 	public static final int MINIMUM_AIR_GAP = 15;
