@@ -1,7 +1,11 @@
 package dancesaurus.squirmy_wormy;
 
-public final class ExampleMod {
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public final class SquirmyWormy {
     public static final String MOD_ID = "squirmy_wormy";
+    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
     public static void init() {
         // Write common init code here.
