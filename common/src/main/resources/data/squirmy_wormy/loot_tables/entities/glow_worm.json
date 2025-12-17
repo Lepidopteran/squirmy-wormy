@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "squirmy_wormy:glow_worm_silk",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}

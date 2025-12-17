@@ -12,22 +12,15 @@
 		"sources": "https://github.com/FabricMC/fabric-example-mod"
 	},
 	"license": "MIT",
-	"icon": "assets/squirmy_wormy/icon.png",
+	"icon": "assets/modid/${mod_id}.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
 			"dancesaurus.squirmy_wormy.SquirmyWormy"
-		],
-		"client": [
-			"dancesaurus.squirmy_wormy.SquirmyWormyClient"
 		]
 	},
 	"mixins": [
-		"squirmy_wormy.mixins.json",
-		{
-			"config": "squirmy_wormy.client.mixins.json",
-			"environment": "client"
-		}
+		"squirmy_wormy.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.16.14",

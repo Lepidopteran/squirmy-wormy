@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "squirmy_wormy:block/glow_worm_web_base"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/carpet",
+  "textures": {
+    "wool": "squirmy_wormy:block/glow_wool"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "squirmy_wormy:block/glow_wool"
+  }
+}
