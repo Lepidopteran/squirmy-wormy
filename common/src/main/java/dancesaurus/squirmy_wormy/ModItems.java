@@ -1,59 +1,61 @@
 package dancesaurus.squirmy_wormy;
 
-import dancesaurus.squirmy_wormy.platform.Services;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Item.Properties;
 import net.minecraft.world.item.SpawnEggItem;
+
+import java.util.function.Supplier;
+
+import static dancesaurus.squirmy_wormy.platform.Services.PLATFORM;
 
 public class ModItems {
 
-    public static final Item EARTHWORM = register(
-            new Item(new Item.Properties()
-                    .food(new FoodProperties.Builder()
-                            .fast()
-                            .nutrition(1)
-                            .effect(new MobEffectInstance(MobEffects.CONFUSION, 6 * 20, 1), 1.0f)
-                            .build())),
-            "earthworm"
+    public static final Supplier<Item> EARTHWORM = registerItem(
+            new Properties().food(new FoodProperties.Builder()
+                    .fast()
+                    .nutrition(1)
+                    .effect(new MobEffectInstance(MobEffects.CONFUSION, 6 * 20, 1), 1.0f)
+                    .build()), "earthworm"
     );
 
-    public static final Item GLOW_WORM_SILK = register(
-            new Item(new Item.Properties()),
-
-            "glow_worm_silk"
+    public static final Supplier<Item> FRIED_WORM = registerItem(
+            new Properties().food(new FoodProperties.Builder()
+                    .fast()
+                    .nutrition(1)
+                    .effect(new MobEffectInstance(MobEffects.CONFUSION, 6 * 20, 1), 1.0f)
+                    .build()), "fried_worm"
     );
 
-    public static final Item FRIED_WORM = register(
-            new Item(new Item.Properties()
-                    .food(new FoodProperties.Builder()
-                            .fast()
-                            .nutrition(1)
-                            .effect(new MobEffectInstance(MobEffects.CONFUSION, 6 * 20, 1), 1.0f)
-                            .build()
-                    )
-            ),
-            "fried_worm"
+    public static final Supplier<Item> GLOW_WORM_SILK = registerItem(new Properties(), "glow_worm_silk");
+
+    public static final Supplier<SpawnEggItem> EARTHWORM_SPAWN_EGG = PLATFORM.registerSpawnEgg(
+            ModEntities.EARTHWORM,
+            "#9df4af",
+            "#1fcdc5",
+            "earthworm_spawn_egg"
     );
 
-    public static final Item EARTHWORM_SPAWN_EGG = register(
-            new SpawnEggItem(
-                    SquirmyWormy.EARTHWORM.get(),
-                    0xaf437c,
-                    0xaf437c,
-                    new Item.Properties()
-            ), "earthworm_spawn_egg"
+    public static final Supplier<SpawnEggItem> GLOW_WORM_SPAWN_EGG = PLATFORM.registerSpawnEgg(
+            ModEntities.GLOW_WORM,
+            "#9df4af",
+            "#1fcdc5",
+            "glow_worm_spawn_egg"
     );
 
-    public static final Item GLOW_WORM_SPAWN_EGG = register(
-            new SpawnEggItem(
-                    SquirmyWormy.GLOW_WORM.get(),
-                    0x9df4af,
-                    0x1fcdc5,
-                    new Item.Properties()
-            ), "glow_worm_spawn_egg"
-    );
+
+    /**
+     * Registers an item with the platform, associating it with the provided name.
+     *
+     * @param properties The properties used to configure the item's behavior and appearance.
+     * @param name       The identifier or name used for the item registration.
+     * @return A supplier for the registered item, which can be used to retrieve or reference it later.
+     */
+    private static Supplier<Item> registerItem(Properties properties, String name) {
+        return PLATFORM.registerItem(() -> new Item(properties), name);
+    }
 
     public static void initialize() {
 //        CompostingChanceRegistry.INSTANCE.add(EARTHWORM, 1.0f);
@@ -85,11 +87,5 @@ public class ModItems {
 //                .register((FabricItemGroupEntries entries) -> {
 //                    entries.add(GLOW_WORM_SILK);
 //                });
-    }
-
-    public static Item register(Item item, String id) {
-        Services.PLATFORM.registerItem(id, item);
-
-        return item;
     }
 }

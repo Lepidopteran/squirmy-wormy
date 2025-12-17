@@ -1,5 +1,6 @@
 package dancesaurus.squirmy_wormy.entities;
 
+import dancesaurus.squirmy_wormy.ModEntities;
 import dancesaurus.squirmy_wormy.SquirmyWormy;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -71,7 +72,7 @@ public class Earthworm extends Animal implements GeoEntity {
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(@NotNull ServerLevel world, @NotNull AgeableMob entity) {
-        return SquirmyWormy.GLOW_WORM.get().create(world);
+        return ModEntities.GLOW_WORM.get().create(world);
     }
 
 

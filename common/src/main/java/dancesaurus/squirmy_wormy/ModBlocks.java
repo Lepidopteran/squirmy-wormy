@@ -1,21 +1,22 @@
 package dancesaurus.squirmy_wormy;
 
 //import dancesaurus.squirmy_wormy.blocks.GlowWormWeb;
-import dancesaurus.squirmy_wormy.platform.Services;
+
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CarpetBlock;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 
 import java.util.function.Supplier;
+
+import static dancesaurus.squirmy_wormy.platform.Services.PLATFORM;
 
 public class ModBlocks {
 
@@ -30,34 +31,25 @@ public class ModBlocks {
 //                    .noOcclusion()), "glow_worm_web", true
 //    );
 
-    public static final Block GLOW_WORM_WOOL = register(
-            new Block(BlockBehaviour.Properties
-                    .copy(Blocks.WHITE_WOOL)
-                    .mapColor(MapColor.COLOR_LIGHT_BLUE)
-                    .strength(1.0f)
-                    .emissiveRendering(ModBlocks::always)
-                    .lightLevel(value -> 1)), "glow_worm_wool", true
+    public static final Supplier<Block> GLOW_WORM_WOOL = PLATFORM.registerBlockWithItem(
+            () ->
+                    new Block(BlockBehaviour.Properties
+                            .copy(Blocks.WHITE_WOOL)
+                            .mapColor(MapColor.COLOR_LIGHT_BLUE)
+                            .strength(1.0f)
+                            .emissiveRendering(ModBlocks::always)
+                            .lightLevel(value -> 1)), "glow_worm_wool"
     );
 
-    public static final Block GLOWING_CARPET = register(
-            new CarpetBlock(BlockBehaviour.Properties
+    public static final Supplier<CarpetBlock> GLOWING_CARPET = PLATFORM.registerBlockWithItem(
+            () -> new CarpetBlock(BlockBehaviour.Properties
                     .copy(Blocks.WHITE_CARPET)
                     .mapColor(MapColor.COLOR_LIGHT_BLUE)
                     .strength(1.0f)
                     .emissiveRendering(ModBlocks::always)
-                    .lightLevel(value -> 1)), "glowing_carpet", true
+                    .lightLevel(value -> 1)), "glowing_carpet"
     );
 
-    public static Block register(Block block, String name, boolean shouldRegisterItem) {
-
-        if (shouldRegisterItem) {
-            BlockItem blockItem = new BlockItem(block, new Item.Properties());
-            Services.PLATFORM.registerItem(name, blockItem);
-        }
-            Services.PLATFORM.registerBlock(name, block);
-
-        return block;
-    }
 
     public static void initialize() {
 //

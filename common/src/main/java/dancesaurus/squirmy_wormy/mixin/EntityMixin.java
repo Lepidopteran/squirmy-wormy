@@ -1,5 +1,6 @@
 package dancesaurus.squirmy_wormy.mixin;
 
+import dancesaurus.squirmy_wormy.ModEntities;
 import dancesaurus.squirmy_wormy.SquirmyWormy;
 import dancesaurus.squirmy_wormy.entities.Earthworm;
 import net.minecraft.util.RandomSource;
@@ -40,7 +41,7 @@ public abstract class EntityMixin {
         if ((Entity) (Object) this instanceof Zombie) {
             if (random.nextFloat() <= 0.15) {
                 Level level = this.level();
-                Earthworm entity = SquirmyWormy.EARTHWORM.get().create(level);
+                Earthworm entity = ModEntities.EARTHWORM.get().create(level);
                 if (entity != null) {
                     entity.moveTo(getX(), getY(), getZ(), this.random.nextFloat() * 360.0F, 0.0F);
                     level.addFreshEntity(entity);
