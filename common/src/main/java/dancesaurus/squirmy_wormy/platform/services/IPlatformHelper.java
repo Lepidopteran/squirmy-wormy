@@ -11,6 +11,9 @@ import net.minecraft.world.level.block.Block;
 
 import java.util.function.Supplier;
 
+/**
+ * Contains a set of methods that help in handling different operations related to Fabric and Forge.
+ */
 public interface IPlatformHelper {
 
     /**
