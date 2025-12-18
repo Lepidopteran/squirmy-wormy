@@ -19,7 +19,14 @@ import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.Items;
+
+import java.util.Set;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -52,12 +59,15 @@ public class Earthworm extends Animal implements GeoEntity {
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new RandomStrollGoal(this, 0.5D));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.15F));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, net.minecraft.world.item.crafting.Ingredient.of(net.minecraft.world.item.Items.DIRT), false));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, Ingredient.of(Items.DIRT), false));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 4.0F));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Zombie.class, true));
 
     }
+
+    private static final Set<Block> VALID_SPAWN_BLOCKS =
+            Set.of(Blocks.GRASS_BLOCK, Blocks.PODZOL, Blocks.DIRT, Blocks.MYCELIUM, Blocks.COARSE_DIRT, Blocks.FARMLAND);
 
     public static boolean canWormSpawn(
             EntityType<Earthworm> entityType,
@@ -66,7 +76,7 @@ public class Earthworm extends Animal implements GeoEntity {
             @NotNull BlockPos pos,
             RandomSource random
     ) {
-        return world.getLevel().isRaining();
+        return world.getLevel().isRaining() && VALID_SPAWN_BLOCKS.contains(world.getBlockState(pos.below()).getBlock());
     }
 
     @Nullable

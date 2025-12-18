@@ -2,10 +2,13 @@ package dancesaurus.squirmy_wormy.entities;
 
 import dancesaurus.squirmy_wormy.ModEntities;
 import dancesaurus.squirmy_wormy.SquirmyWormy;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.behavior.AnimalMakeLove;
@@ -16,6 +19,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+
+import java.util.Set;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -42,6 +51,28 @@ public class GlowWorm extends Animal implements GeoEntity {
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, Ingredient.of(Items.DIRT), false));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 4.0F));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+    }
+
+    private static final Set<Block> VALID_SPAWN_BLOCKS =
+            Set.of(
+                    Blocks.MUD,
+                    Blocks.BIG_DRIPLEAF,
+                    Blocks.ANDESITE,
+                    Blocks.DIORITE,
+                    Blocks.STONE,
+                    Blocks.DEEPSLATE,
+                    Blocks.MOSS_BLOCK
+            );
+
+
+    public static boolean canGlowWormSpawn(
+            EntityType<GlowWorm> entityType,
+            @NotNull ServerLevelAccessor level,
+            MobSpawnType reason,
+            @NotNull BlockPos pos,
+            RandomSource random
+    ) {
+        return VALID_SPAWN_BLOCKS.contains(level.getLevel().getBlockState(pos.below()).getBlock());
     }
 
     @Nullable
