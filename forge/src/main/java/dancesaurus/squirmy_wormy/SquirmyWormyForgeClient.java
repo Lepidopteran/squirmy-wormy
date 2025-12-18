@@ -5,7 +5,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 @Mod.EventBusSubscriber(modid = SquirmyWormy.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class ClientModEvents {
+public class SquirmyWormyForgeClient {
 
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
