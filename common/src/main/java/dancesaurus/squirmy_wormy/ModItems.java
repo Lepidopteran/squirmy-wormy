@@ -13,7 +13,7 @@ import static dancesaurus.squirmy_wormy.platform.Services.PLATFORM;
 
 public class ModItems {
 
-    public static final Supplier<Item> EARTHWORM = registerItem(
+    public static final Supplier<Item> EARTHWORM = PLATFORM.registerItem(
             new Properties().food(new FoodProperties.Builder()
                     .fast()
                     .nutrition(1)
@@ -21,7 +21,7 @@ public class ModItems {
                     .build()), "earthworm"
     );
 
-    public static final Supplier<Item> FRIED_WORM = registerItem(
+    public static final Supplier<Item> FRIED_WORM = PLATFORM.registerItem(
             new Properties().food(new FoodProperties.Builder()
                     .fast()
                     .nutrition(1)
@@ -29,7 +29,7 @@ public class ModItems {
                     .build()), "fried_worm"
     );
 
-    public static final Supplier<Item> GLOW_WORM_SILK = registerItem(new Properties(), "glow_worm_silk");
+    public static final Supplier<Item> GLOW_WORM_SILK = PLATFORM.registerItem("glow_worm_silk");
 
     public static final Supplier<SpawnEggItem> EARTHWORM_SPAWN_EGG = PLATFORM.registerSpawnEgg(
             ModEntities.EARTHWORM,
@@ -44,18 +44,6 @@ public class ModItems {
             "#1fcdc5",
             "glow_worm_spawn_egg"
     );
-
-
-    /**
-     * Registers an item with the platform, associating it with the provided name.
-     *
-     * @param properties The properties used to configure the item's behavior and appearance.
-     * @param name       The identifier or name used for the item registration.
-     * @return A supplier for the registered item, which can be used to retrieve or reference it later.
-     */
-    private static Supplier<Item> registerItem(Properties properties, String name) {
-        return PLATFORM.registerItem(() -> new Item(properties), name);
-    }
 
     public static void initialize() {
 //        CompostingChanceRegistry.INSTANCE.add(EARTHWORM, 1.0f);

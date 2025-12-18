@@ -38,7 +38,7 @@ public class ForgePlatformHelper implements IPlatformHelper {
     }
 
     @Override
-    public <T extends Item> Supplier<T> registerItem(Supplier<T> item, String name) {
+    public <T extends Item> Supplier<T> registerCustomItem(Supplier<T> item, String name) {
         return ITEMS.register(name, item);
     }
 

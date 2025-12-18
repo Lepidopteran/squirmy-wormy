@@ -33,7 +33,7 @@ public class FabricPlatformHelper implements IPlatformHelper {
     }
 
     @Override
-    public <T extends Item> Supplier<T> registerItem(Supplier<T> item, String name) {
+    public <T extends Item> Supplier<T> registerCustomItem(Supplier<T> item, String name) {
         T registry = Registry.register(
                 BuiltInRegistries.ITEM,
                 new ResourceLocation(SquirmyWormy.MOD_ID, name),
@@ -49,7 +49,7 @@ public class FabricPlatformHelper implements IPlatformHelper {
             String foregroundColor,
             String name
     ) {
-        return registerItem(
+        return registerCustomItem(
                 () -> new SpawnEggItem(
                         entity.get(),
                         Integer.parseInt(backgroundColor.substring(1), 16),

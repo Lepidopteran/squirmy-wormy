@@ -9,7 +9,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.block.Block;
 
-import java.util.Optional;
 import java.util.function.Supplier;
 
 public interface IPlatformHelper {
@@ -46,13 +45,34 @@ public interface IPlatformHelper {
     }
 
     /**
-     * Registers an item with the platform, associating it with the provided name.
+     * Registers a custom item with the specified name and returns a supplier for the registered item.
      *
-     * @param item The supplier for the item to be registered.
+     * @param item A supplier for the item instance to be registered.
      * @param name The identifier or name used for the item registration.
      * @return A supplier for the registered item, which can be used to retrieve or reference it later.
      */
-    <T extends Item> Supplier<T> registerItem(Supplier<T> item, String name);
+    <T extends Item> Supplier<T> registerCustomItem(Supplier<T> item, String name);
+
+    /**
+     * Registers an item with a platform using the provided properties and name.
+     *
+     * @param props The properties defining the behavior and attributes of the item.
+     * @param name  The identifier or name used for the item registration.
+     * @return A supplier for the registered item, which can be used to retrieve or reference it later.
+     */
+    default Supplier<Item> registerItem(Item.Properties props, String name) {
+        return registerCustomItem(() -> new Item(props), name);
+    }
+
+    /**
+     * Registers an item with a platform using default properties and the specified name.
+     *
+     * @param name The identifier or name used for the item registration.
+     * @return A supplier for the registered item, which can be used to retrieve or reference it later.
+     */
+    default Supplier<Item> registerItem(String name) {
+        return registerItem(new Item.Properties(), name);
+    }
 
     /**
      * Registers a spawn egg item for the specified entity type with custom color settings and name.
@@ -82,8 +102,8 @@ public interface IPlatformHelper {
     /**
      * Registers a block along with its corresponding item, using the provided properties for the item.
      *
-     * @param block Supplier for the block to be registered.
-     * @param name Identifier or name used for registration of both the block and item.
+     * @param block     Supplier for the block to be registered.
+     * @param name      Identifier or name used for registration of both the block and item.
      * @param itemProps Properties defining the behavior and attributes of the associated item.
      * @return Supplier for the registered block, allowing access to the block instance.
      */
@@ -94,7 +114,7 @@ public interface IPlatformHelper {
     ) {
         Supplier<T> registeredBlock = registerBlock(block, name);
 
-        registerItem(
+        registerCustomItem(
                 () -> new BlockItem(registeredBlock.get(), itemProps),
                 name
         );
@@ -106,7 +126,7 @@ public interface IPlatformHelper {
      * Registers a block along with its corresponding item using default item properties.
      *
      * @param block Supplier for the block to be registered.
-     * @param name Identifier or name used for registration of both the block and item.
+     * @param name  Identifier or name used for registration of both the block and item.
      * @return Supplier for the registered block, allowing access to the block instance.
      */
     default <T extends Block> Supplier<T> registerBlockWithItem(
