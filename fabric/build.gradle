@@ -9,7 +9,9 @@ dependencies {
         parchment("org.parchmentmc.data:parchment-${parchment_minecraft}:${parchment_version}@zip")
     }
     modImplementation libs.bundles.fabric
+    modImplementation "software.bernie.geckolib:geckolib-fabric-${project.minecraft_version}:${project.geckolib_version}"
     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
+
     implementation project(":common")
 }
 

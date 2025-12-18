@@ -1,6 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "squirmy_wormy:item/glow_worm_silk"
-  }
-}

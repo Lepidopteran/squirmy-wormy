@@ -1,6 +1,0 @@
-{
-  "parent": "block/cross",
-  "textures": {
-    "cross": "squirmy_wormy:block/glow_worm_web_tip"
-  }
-}
