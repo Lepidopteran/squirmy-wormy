@@ -14,9 +14,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -25,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import static dancesaurus.squirmy_wormy.SquirmyWormy.MOD_ID;
 
 
-@Mod(SquirmyWormy.MOD_ID)
+@Mod(MOD_ID)
 public class SquirmyWormyForge {
     // region Deferred Registers
 
@@ -33,8 +32,7 @@ public class SquirmyWormyForge {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
     public static final DeferredRegister<Potion> POTIONS = DeferredRegister.create(ForgeRegistries.POTIONS, MOD_ID);
 
-    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(
-            ForgeRegistries.BLOCK_ENTITY_TYPES,
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES,
             MOD_ID
     );
 
@@ -58,23 +56,26 @@ public class SquirmyWormyForge {
             MOD_ID
     );
 
-    public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(
-            ForgeRegistries.RECIPE_SERIALIZERS,
+    public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS,
             MOD_ID
     );
 
     // endregion
 
     public SquirmyWormyForge() {
-
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        registerBus(bus);
-        bus.addListener(this::onRegisterAttributes);
-
-
         SquirmyWormy.initialize();
-        SquirmyWormy.LOGGER.info("The worms have been released from the forges of the earth...");
+
+        IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
+        registerBusToDeferredRegistries(modBus);
+
+        modBus.addListener(this::onRegisterAttributes);
+        modBus.addListener(this::onFinished);
+
         MinecraftForge.EVENT_BUS.register(this);
+    }
+
+    private void onFinished(@NotNull FMLCommonSetupEvent event) {
+        SquirmyWormy.LOGGER.info("The worms have been released from the forges of the earth...");
     }
 
     public void onRegisterAttributes(@NotNull EntityAttributeCreationEvent event) {
@@ -86,7 +87,7 @@ public class SquirmyWormyForge {
         });
     }
 
-    public void registerBus(IEventBus bus) {
+    public void registerBusToDeferredRegistries(IEventBus bus) {
         BLOCKS.register(bus);
         ITEMS.register(bus);
         ENTITY_TYPES.register(bus);
