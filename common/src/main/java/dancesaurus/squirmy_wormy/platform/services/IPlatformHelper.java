@@ -71,22 +71,6 @@ public interface IPlatformHelper {
     );
 
     /**
-     * Registers a spawn egg item for the specified entity type with integer-based color values.
-     *
-     * @param entity          The supplier for the entity type to associate with the spawn egg.
-     * @param backgroundColor The background color in integer format.
-     * @param foregroundColor The foreground color in integer format.
-     * @param name            The identifier or name used for the spawn egg registration.
-     * @return A supplier for the registered spawn egg item, allowing later reference or retrieval.
-     */
-    <T extends Mob> Supplier<SpawnEggItem> registerSpawnEggWithIntColors(
-            Supplier<EntityType<T>> entity,
-            int backgroundColor,
-            int foregroundColor,
-            String name
-    );
-
-    /**
      * Registers a block with the specified name.
      *
      * @param block The supplier for the block to be registered.

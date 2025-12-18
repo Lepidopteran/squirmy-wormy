@@ -66,24 +66,6 @@ public class ForgePlatformHelper implements IPlatformHelper {
     }
 
     @Override
-    public <T extends Mob> Supplier<SpawnEggItem> registerSpawnEggWithIntColors(
-            Supplier<EntityType<T>> entity,
-            int backgroundColor,
-            int foregroundColor,
-            String name
-    ) {
-        return ITEMS.register(
-                name,
-                () -> new ForgeSpawnEggItem(
-                        entity,
-                        backgroundColor,
-                        foregroundColor,
-                        new Item.Properties()
-                )
-        );
-    }
-
-    @Override
     public <T extends Entity> Supplier<EntityType<T>> registerEntity(
             String name,
             EntityType.EntityFactory<T> factory,
