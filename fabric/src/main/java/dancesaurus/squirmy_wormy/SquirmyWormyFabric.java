@@ -10,7 +10,7 @@ public class SquirmyWormyFabric implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        SquirmyWormy.init();
+        SquirmyWormy.initialize();
 
         EntityAttributes.getAll().forEach((type, attributes) -> {
             EntityType<? extends LivingEntity> entityType = type.get();

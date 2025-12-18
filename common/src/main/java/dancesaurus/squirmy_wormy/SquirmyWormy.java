@@ -7,7 +7,7 @@ public final class SquirmyWormy {
     public static final String MOD_ID = "squirmy_wormy";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-    public static void init() {
+    public static void initialize() {
         ModBlocks.initialize();
         ModItems.initialize();
         ModEntities.initialize();

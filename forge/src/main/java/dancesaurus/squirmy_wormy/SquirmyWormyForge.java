@@ -72,7 +72,7 @@ public class SquirmyWormyForge {
         bus.addListener(this::onRegisterAttributes);
 
 
-        SquirmyWormy.init();
+        SquirmyWormy.initialize();
         SquirmyWormy.LOGGER.info("The worms have been released from the forges of the earth...");
         MinecraftForge.EVENT_BUS.register(this);
     }
