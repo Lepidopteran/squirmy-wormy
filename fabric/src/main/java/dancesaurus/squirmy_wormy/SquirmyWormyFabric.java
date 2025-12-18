@@ -11,6 +11,7 @@ public class SquirmyWormyFabric implements ModInitializer {
     @Override
     public void onInitialize() {
         SquirmyWormy.initialize();
+        SquirmyWormy.registerItemCompostingChances();
 
         EntityAttributes.getAll().forEach((type, attributes) -> {
             EntityType<? extends LivingEntity> entityType = type.get();

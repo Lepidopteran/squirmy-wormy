@@ -7,6 +7,7 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 
 import java.util.function.Supplier;
@@ -76,6 +77,15 @@ public interface IPlatformHelper {
     default Supplier<Item> registerItem(String name) {
         return registerItem(new Item.Properties(), name);
     }
+
+    /**
+     * Sets the composting chance for the specified item.
+     * This determines the probability that the item will add a level to a composter.
+     *
+     * @param item The item you want to add a chance to.
+     * @param chance The probability of the item adding a level
+     */
+    void registerItemCompostingChance(ItemLike item, float chance);
 
     /**
      * Registers a spawn egg item for the specified entity type with custom color settings and name.

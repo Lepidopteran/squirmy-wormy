@@ -23,7 +23,6 @@ import org.jetbrains.annotations.NotNull;
 
 import static dancesaurus.squirmy_wormy.SquirmyWormy.MOD_ID;
 
-
 @Mod(MOD_ID)
 public class SquirmyWormyForge {
     // region Deferred Registers
@@ -68,10 +67,15 @@ public class SquirmyWormyForge {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         registerBusToDeferredRegistries(modBus);
 
+        modBus.addListener(this::onSetup);
         modBus.addListener(this::onRegisterAttributes);
         modBus.addListener(this::onFinished);
 
         MinecraftForge.EVENT_BUS.register(this);
+    }
+
+    private void onSetup(@NotNull FMLCommonSetupEvent event) {
+        event.enqueueWork(SquirmyWormy::registerItemCompostingChances);
     }
 
     private void onFinished(@NotNull FMLCommonSetupEvent event) {

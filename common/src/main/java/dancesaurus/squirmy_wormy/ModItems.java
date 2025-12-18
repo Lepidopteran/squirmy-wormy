@@ -1,5 +1,6 @@
 package dancesaurus.squirmy_wormy;
 
+import dancesaurus.squirmy_wormy.registries.ItemCompostingChances;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
@@ -46,7 +47,8 @@ public class ModItems {
     );
 
     public static void initialize() {
-//        CompostingChanceRegistry.INSTANCE.add(EARTHWORM, 1.0f);
+
+        ItemCompostingChances.register(EARTHWORM, 1.0f);
 //
 //        ItemGroupEvents
 //                .modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK)

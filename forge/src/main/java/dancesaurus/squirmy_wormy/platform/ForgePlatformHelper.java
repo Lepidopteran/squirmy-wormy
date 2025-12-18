@@ -7,7 +7,9 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
@@ -40,6 +42,11 @@ public class ForgePlatformHelper implements IPlatformHelper {
     @Override
     public <T extends Item> Supplier<T> registerCustomItem(Supplier<T> item, String name) {
         return ITEMS.register(name, item);
+    }
+
+    @Override
+    public void registerItemCompostingChance(ItemLike item, float chance) {
+        ComposterBlock.COMPOSTABLES.put(item.asItem(), chance);
     }
 
     @Override

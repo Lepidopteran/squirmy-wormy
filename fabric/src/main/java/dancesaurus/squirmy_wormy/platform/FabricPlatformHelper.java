@@ -3,6 +3,7 @@ package dancesaurus.squirmy_wormy.platform;
 import dancesaurus.squirmy_wormy.SquirmyWormy;
 import dancesaurus.squirmy_wormy.platform.services.IPlatformHelper;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
+import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -10,6 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 
 import java.util.function.Supplier;
@@ -40,6 +42,11 @@ public class FabricPlatformHelper implements IPlatformHelper {
                 item.get()
         );
         return () -> registry;
+    }
+
+    @Override
+    public void registerItemCompostingChance(ItemLike item, float chance) {
+        CompostingChanceRegistry.INSTANCE.add(item, chance);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package dancesaurus.squirmy_wormy;
 
+import dancesaurus.squirmy_wormy.platform.Services;
+import dancesaurus.squirmy_wormy.registries.ItemCompostingChances;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,5 +13,11 @@ public final class SquirmyWormy {
         ModBlocks.initialize();
         ModItems.initialize();
         ModEntities.initialize();
+    }
+
+    public static void registerItemCompostingChances() {
+        ItemCompostingChances
+                .getAll()
+                .forEach((item, chance) -> Services.PLATFORM.registerItemCompostingChance(item.get(), chance));
     }
 }
