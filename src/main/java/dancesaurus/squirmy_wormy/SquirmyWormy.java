@@ -50,12 +50,20 @@ public class SquirmyWormy implements ModInitializer {
         FabricDefaultAttributeRegistry.register(GLOW_WORM, GlowWorm.createAttributes());
 
         // TODO: Make it so worms only can spawn in overworld
-        BiomeModifications.addSpawn(BiomeSelectors.all(), SpawnGroup.CREATURE, EARTHWORM, 1000, 1, 2);
+        BiomeModifications.addSpawn(BiomeSelectors.all(), SpawnGroup.CREATURE, EARTHWORM, 15, 1, 2);
         SpawnRestriction.register(
                 EARTHWORM,
                 SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING,
                 Earthworm::earthWormSpawnRules
+        );
+
+        BiomeModifications.addSpawn(BiomeSelectors.all(), SpawnGroup.CREATURE, GLOW_WORM, 15, 1, 2);
+        SpawnRestriction.register(
+                GLOW_WORM,
+                SpawnRestriction.Location.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING,
+                GlowWorm::GlowWormSpawnRules
         );
 
         PlayerBlockBreakEvents.AFTER.register(((world, playerEntity, blockPos, blockState, blockEntity) -> {

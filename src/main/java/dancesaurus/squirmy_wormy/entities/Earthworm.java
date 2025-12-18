@@ -1,6 +1,9 @@
 package dancesaurus.squirmy_wormy.entities;
 
 import dancesaurus.squirmy_wormy.SquirmyWormy;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.GrassBlock;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.control.JumpControl;
@@ -34,11 +37,14 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+import java.util.Arrays;
+import java.util.Set;
+
 public class Earthworm extends AnimalEntity implements GeoEntity {
     protected static final RawAnimation WIGGLE_ANIMATION = RawAnimation.begin().thenLoop("earthworm_wiggle");
     private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
 
-    public Earthworm (EntityType<? extends AnimalEntity> entityType, World world) {
+    public Earthworm(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
 
         this.jumpControl = new JumpControl(this) {
@@ -68,9 +74,20 @@ public class Earthworm extends AnimalEntity implements GeoEntity {
 
     }
 
-    public static boolean earthWormSpawnRules(EntityType<Earthworm> entityType, @NotNull ServerWorldAccess world, SpawnReason reason, @NotNull BlockPos pos, Random random) {
+    private static final Set<Block> VALID_SPAWN_BLOCKS =
+            Set.of(Blocks.GRASS_BLOCK, Blocks.PODZOL, Blocks.DIRT, Blocks.MYCELIUM, Blocks.COARSE_DIRT, Blocks.FARMLAND);
+
+    public static boolean earthWormSpawnRules(
+            EntityType<Earthworm> entityType,
+            @NotNull ServerWorldAccess world,
+            SpawnReason reason,
+            @NotNull BlockPos pos,
+            Random random
+    ) {
         // TODO: Make worms only spawn when raining
-        return true;
+        ServerWorld serverWorld = world.toServerWorld();
+
+        return serverWorld.isRaining() && VALID_SPAWN_BLOCKS.contains(serverWorld.getBlockState(pos.down()).getBlock());
     }
 
     @Nullable
@@ -86,7 +103,7 @@ public class Earthworm extends AnimalEntity implements GeoEntity {
     }
 
     protected <E extends Earthworm> PlayState walkAnimationController(final AnimationState<E> event) {
-            return event.setAndContinue(WIGGLE_ANIMATION);
+        return event.setAndContinue(WIGGLE_ANIMATION);
     }
 
     @Override
@@ -113,8 +130,10 @@ public class Earthworm extends AnimalEntity implements GeoEntity {
         }
     }
 
+
     public static DefaultAttributeContainer.Builder createAttributes() {
-        return MobEntity.createMobAttributes()
+        return MobEntity
+                .createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 1)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.2)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 20)

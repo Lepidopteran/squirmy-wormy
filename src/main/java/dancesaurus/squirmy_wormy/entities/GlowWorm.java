@@ -1,7 +1,10 @@
 package dancesaurus.squirmy_wormy.entities;
 
 import dancesaurus.squirmy_wormy.SquirmyWormy;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -13,7 +16,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -23,6 +30,8 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
+
+import java.util.Set;
 
 public class GlowWorm extends AnimalEntity implements GeoEntity {
     protected static final RawAnimation WIGGLE_ANIMATION = RawAnimation.begin().thenLoop("glow_worm_wiggle");
@@ -41,6 +50,36 @@ public class GlowWorm extends AnimalEntity implements GeoEntity {
         this.goalSelector.add(5, new LookAroundGoal(this));
     }
 
+    private static final Set<Block> VALID_SPAWN_BLOCKS =
+            Set.of(
+                    Blocks.MUD,
+                    Blocks.BIG_DRIPLEAF,
+                    Blocks.ANDESITE,
+                    Blocks.DIORITE,
+                    Blocks.STONE,
+                    Blocks.DEEPSLATE,
+                    Blocks.MOSS_BLOCK
+            );
+
+
+    public static boolean GlowWormSpawnRules(
+            EntityType<GlowWorm> entityType,
+            @NotNull ServerWorldAccess world,
+            SpawnReason reason,
+            @NotNull BlockPos pos,
+            Random random
+    ) {
+
+        ServerWorld serverWorld = world.toServerWorld();
+
+        SquirmyWormy.LOGGER.info("Worming it? {}", VALID_SPAWN_BLOCKS.contains(serverWorld
+                .getBlockState(pos.down())
+                .getBlock()));
+
+        return VALID_SPAWN_BLOCKS.contains(serverWorld.getBlockState(pos.down()).getBlock());
+    }
+
+
     @Nullable
     @Override
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
@@ -54,7 +93,7 @@ public class GlowWorm extends AnimalEntity implements GeoEntity {
     }
 
     protected <E extends GlowWorm> PlayState walkAnimationController(final AnimationState<E> event) {
-            return event.setAndContinue(WIGGLE_ANIMATION);
+        return event.setAndContinue(WIGGLE_ANIMATION);
     }
 
     @Override
