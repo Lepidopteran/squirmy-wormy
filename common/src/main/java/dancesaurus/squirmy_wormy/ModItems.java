@@ -33,8 +33,8 @@ public class ModItems {
 
     public static final Supplier<SpawnEggItem> EARTHWORM_SPAWN_EGG = PLATFORM.registerSpawnEgg(
             ModEntities.EARTHWORM,
-            "#9df4af",
-            "#1fcdc5",
+            "#af437c",
+            "#af437c",
             "earthworm_spawn_egg"
     );
 
