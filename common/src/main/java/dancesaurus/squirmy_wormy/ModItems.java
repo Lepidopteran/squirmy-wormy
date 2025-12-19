@@ -1,6 +1,8 @@
 package dancesaurus.squirmy_wormy;
 
-import dancesaurus.squirmy_wormy.registries.ItemCompostingChances;
+import dancesaurus.squirmy_wormy.platform.VanillaTab;
+import dancesaurus.squirmy_wormy.registries.CompostingChances;
+import dancesaurus.squirmy_wormy.registries.VanillaTabModifications;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
@@ -47,35 +49,12 @@ public class ModItems {
     );
 
     public static void initialize() {
+        CompostingChances.register(EARTHWORM, 1.0f);
 
-        ItemCompostingChances.register(EARTHWORM, 1.0f);
-//
-//        ItemGroupEvents
-//                .modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK)
-//                .register((FabricItemGroupEntries entries) -> {
-//                            entries.add(EARTHWORM);
-//                        }
-//                );
-//
-//        ItemGroupEvents
-//                .modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK)
-//                .register((FabricItemGroupEntries entries) -> {
-//                            entries.add(FRIED_WORM);
-//                        }
-//                );
-//
-//        ItemGroupEvents
-//                .modifyEntriesEvent(ItemGroups.SPAWN_EGGS)
-//                .register((FabricItemGroupEntries entries) -> {
-//                            entries.add(EARTHWORM_SPAWN_EGG);
-//                            entries.add(GLOW_WORM_SPAWN_EGG);
-//                        }
-//                );
-//
-//        ItemGroupEvents
-//                .modifyEntriesEvent(ItemGroups.INGREDIENTS)
-//                .register((FabricItemGroupEntries entries) -> {
-//                    entries.add(GLOW_WORM_SILK);
-//                });
+        VanillaTabModifications.addItemTo(EARTHWORM, VanillaTab.FOOD_AND_DRINKS);
+        VanillaTabModifications.addItemTo(FRIED_WORM, VanillaTab.FOOD_AND_DRINKS);
+        VanillaTabModifications.addItemTo(GLOW_WORM_SILK, VanillaTab.INGREDIENTS);
+        VanillaTabModifications.addItemTo(EARTHWORM_SPAWN_EGG, VanillaTab.SPAWN_EGGS);
+        VanillaTabModifications.addItemTo(GLOW_WORM_SPAWN_EGG, VanillaTab.SPAWN_EGGS);
     }
 }

@@ -1,17 +1,23 @@
 package dancesaurus.squirmy_wormy;
 
 import dancesaurus.squirmy_wormy.registries.EntityAttributes;
+import dancesaurus.squirmy_wormy.registries.VanillaTabModifications;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraftforge.common.CreativeModeTabRegistry;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -31,7 +37,8 @@ public class SquirmyWormyForge {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
     public static final DeferredRegister<Potion> POTIONS = DeferredRegister.create(ForgeRegistries.POTIONS, MOD_ID);
 
-    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES,
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(
+            ForgeRegistries.BLOCK_ENTITY_TYPES,
             MOD_ID
     );
 
@@ -55,7 +62,13 @@ public class SquirmyWormyForge {
             MOD_ID
     );
 
-    public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS,
+    public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(
+            ForgeRegistries.RECIPE_SERIALIZERS,
+            MOD_ID
+    );
+
+    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(
+            Registries.CREATIVE_MODE_TAB,
             MOD_ID
     );
 
@@ -69,6 +82,7 @@ public class SquirmyWormyForge {
 
         modBus.addListener(this::onSetup);
         modBus.addListener(this::onRegisterAttributes);
+        modBus.addListener(this::onCreativeTab);
         modBus.addListener(this::onFinished);
 
         MinecraftForge.EVENT_BUS.register(this);
@@ -91,6 +105,10 @@ public class SquirmyWormyForge {
         });
     }
 
+    private void onCreativeTab(@NotNull BuildCreativeModeTabContentsEvent event) {
+        VanillaTabModifications.get(event.getTabKey()).forEach(event::accept);
+    }
+
     public void registerBusToDeferredRegistries(IEventBus bus) {
         BLOCKS.register(bus);
         ITEMS.register(bus);
@@ -101,6 +119,7 @@ public class SquirmyWormyForge {
         RECIPE_TYPES.register(bus);
         RECIPE_SERIALIZERS.register(bus);
         POTIONS.register(bus);
+        CREATIVE_MODE_TABS.register(bus);
     }
 }
 

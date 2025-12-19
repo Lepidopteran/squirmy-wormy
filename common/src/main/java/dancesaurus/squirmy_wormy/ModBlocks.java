@@ -2,15 +2,15 @@ package dancesaurus.squirmy_wormy;
 
 //import dancesaurus.squirmy_wormy.blocks.GlowWormWeb;
 
+import dancesaurus.squirmy_wormy.platform.VanillaTab;
+import dancesaurus.squirmy_wormy.registries.CompostingChances;
+import dancesaurus.squirmy_wormy.registries.VanillaTabModifications;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CarpetBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 
@@ -52,18 +52,13 @@ public class ModBlocks {
 
 
     public static void initialize() {
-//
-//    CompostingChanceRegistry.INSTANCE.add(GLOW_WORM_WEB, 1.0f);
-//
-//    ItemGroupEvents
-//            .modifyEntriesEvent(ItemGroups.NATURAL)
-//            .register((FabricItemGroupEntries entries) -> entries.add(GLOW_WORM_WEB));
-//    ItemGroupEvents
-//            .modifyEntriesEvent(ItemGroups.COLORED_BLOCKS)
-//            .register((FabricItemGroupEntries entries) -> entries.add(GLOW_WORM_WOOL));
-//      ItemGroupEvents
-//              .modifyEntriesEvent(ItemGroups.COLORED_BLOCKS)
-//              .register((FabricItemGroupEntries entries) -> entries.add(GLOWING_CARPET));
+/*
+        CompostingChances.register(GLOW_WORM_WEB, 1.0f);
+        VanillaTabModifications.addItemTo(GLOW_WORM_WEB, VanillaTab.NATURAL_BLOCKS);
+*/
+
+        VanillaTabModifications.addItemTo(GLOW_WORM_WOOL, VanillaTab.COLORED_BLOCKS);
+        VanillaTabModifications.addItemTo(GLOWING_CARPET, VanillaTab.COLORED_BLOCKS);
     }
 
     private static boolean always(BlockState state, BlockGetter level, BlockPos pos) {
