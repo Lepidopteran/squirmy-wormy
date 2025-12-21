@@ -1,21 +1,22 @@
 package dancesaurus.squirmy_wormy;
 
 import dancesaurus.squirmy_wormy.registries.EntityAttributes;
+import dancesaurus.squirmy_wormy.registries.FlammableBlocks;
 import dancesaurus.squirmy_wormy.registries.VanillaTabModifications;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.CreativeModeTabs;
 
 public class SquirmyWormyFabric implements ModInitializer {
 
     @Override
     public void onInitialize() {
         SquirmyWormy.initialize();
-        SquirmyWormy.registerItemCompostingChances();
+        SquirmyWormy.registerCompostingChances();
+        ModBlocks.registerFlammableBlocks();
 
         EntityAttributes.getAll().forEach((type, attributes) -> {
             EntityType<? extends LivingEntity> entityType = type.get();

@@ -1,8 +1,8 @@
 package dancesaurus.squirmy_wormy;
 
 import dancesaurus.squirmy_wormy.registries.EntityAttributes;
+import dancesaurus.squirmy_wormy.registries.FlammableBlocks;
 import dancesaurus.squirmy_wormy.registries.VanillaTabModifications;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
@@ -14,8 +14,9 @@ import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.common.CreativeModeTabRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -89,11 +90,13 @@ public class SquirmyWormyForge {
     }
 
     private void onSetup(@NotNull FMLCommonSetupEvent event) {
-        event.enqueueWork(SquirmyWormy::registerItemCompostingChances);
+        event.enqueueWork(SquirmyWormy::registerCompostingChances);
+        event.enqueueWork(ModBlocks::registerFlammableBlocks);
     }
 
     private void onFinished(@NotNull FMLCommonSetupEvent event) {
         SquirmyWormy.LOGGER.info("The worms have been released from the forges of the earth...");
+        SquirmyWormy.LOGGER.info("Blocks: \n {}", FlammableBlocks.getAll());
     }
 
     public void onRegisterAttributes(@NotNull EntityAttributeCreationEvent event) {

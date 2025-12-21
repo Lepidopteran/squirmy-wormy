@@ -15,7 +15,7 @@ public final class SquirmyWormy {
         ModEntities.initialize();
     }
 
-    public static void registerItemCompostingChances() {
+    public static void registerCompostingChances() {
         CompostingChances
                 .getAll()
                 .forEach((item, chance) -> Services.PLATFORM.registerItemCompostingChance(item.get().asItem(), chance));

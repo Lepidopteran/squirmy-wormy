@@ -4,6 +4,7 @@ package dancesaurus.squirmy_wormy;
 
 import dancesaurus.squirmy_wormy.platform.VanillaTab;
 import dancesaurus.squirmy_wormy.registries.CompostingChances;
+import dancesaurus.squirmy_wormy.registries.FlammableBlocks;
 import dancesaurus.squirmy_wormy.registries.VanillaTabModifications;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
@@ -59,6 +60,12 @@ public class ModBlocks {
 
         VanillaTabModifications.addItemTo(GLOW_WORM_WOOL, VanillaTab.COLORED_BLOCKS);
         VanillaTabModifications.addItemTo(GLOWING_CARPET, VanillaTab.COLORED_BLOCKS);
+    }
+
+    // HACK: Need to make it load after initialization, so I can keep proper track of it.
+    public static void registerFlammableBlocks() {
+        FlammableBlocks.register(GLOW_WORM_WOOL.get(), FlammableBlocks.WOOL_FLAMMABILITY);
+        FlammableBlocks.register(GLOWING_CARPET.get(), FlammableBlocks.CARPET_FLAMMABILITY);
     }
 
     private static boolean always(BlockState state, BlockGetter level, BlockPos pos) {
