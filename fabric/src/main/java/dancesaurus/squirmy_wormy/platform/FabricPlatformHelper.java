@@ -7,6 +7,8 @@ import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.item.Item;
@@ -30,18 +32,17 @@ public class FabricPlatformHelper implements IPlatformHelper {
 
     @Override
     public boolean isDevelopmentEnvironment() {
-
         return FabricLoader.getInstance().isDevelopmentEnvironment();
     }
 
     @Override
-    public <T extends Item> Supplier<T> registerCustomItem(Supplier<T> item, String name) {
+    public <T extends Item> LazyResource<T> registerCustomItem(Supplier<T> item, String name) {
         T registry = Registry.register(
                 BuiltInRegistries.ITEM,
                 new ResourceLocation(SquirmyWormy.MOD_ID, name),
                 item.get()
         );
-        return () -> registry;
+        return new LazyResource<>(name, () -> registry);
     }
 
     @Override
@@ -50,8 +51,8 @@ public class FabricPlatformHelper implements IPlatformHelper {
     }
 
     @Override
-    public <T extends Mob> Supplier<SpawnEggItem> registerSpawnEgg(
-            Supplier<EntityType<T>> entity,
+    public <T extends Mob> LazyResource<SpawnEggItem> registerSpawnEgg(
+            LazyResource<EntityType<T>> entity,
             String backgroundColor,
             String foregroundColor,
             String name
@@ -67,18 +68,18 @@ public class FabricPlatformHelper implements IPlatformHelper {
     }
 
     @Override
-    public <T extends Block> Supplier<T> registerBlock(Supplier<T> block, String name) {
+    public <T extends Block> LazyResource<T> registerBlock(Supplier<T> block, String name) {
         T registry = Registry.register(
                 BuiltInRegistries.BLOCK,
                 new ResourceLocation(SquirmyWormy.MOD_ID, name),
                 block.get()
         );
 
-        return () -> registry;
+        return new LazyResource<>(name, () -> registry);
     }
 
     @Override
-    public <T extends Entity> Supplier<EntityType<T>> registerEntity(
+    public <T extends Entity> LazyResource<EntityType<T>> registerEntity(
             String name,
             EntityType.EntityFactory<T> factory,
             MobCategory category,
@@ -94,6 +95,6 @@ public class FabricPlatformHelper implements IPlatformHelper {
                         .build()
         );
 
-        return () -> registry;
+        return new LazyResource<>(name, () -> registry);
     }
 }

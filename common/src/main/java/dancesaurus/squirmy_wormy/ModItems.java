@@ -1,5 +1,6 @@
 package dancesaurus.squirmy_wormy;
 
+import dancesaurus.squirmy_wormy.platform.LazyResource;
 import dancesaurus.squirmy_wormy.platform.VanillaTab;
 import dancesaurus.squirmy_wormy.registries.CompostingChances;
 import dancesaurus.squirmy_wormy.registries.VanillaTabModifications;
@@ -16,7 +17,7 @@ import static dancesaurus.squirmy_wormy.platform.Services.PLATFORM;
 
 public class ModItems {
 
-    public static final Supplier<Item> EARTHWORM = PLATFORM.registerItem(
+    public static final LazyResource<Item> EARTHWORM = PLATFORM.registerItem(
             new Properties().food(new FoodProperties.Builder()
                     .fast()
                     .nutrition(1)
@@ -24,7 +25,7 @@ public class ModItems {
                     .build()), "earthworm"
     );
 
-    public static final Supplier<Item> FRIED_WORM = PLATFORM.registerItem(
+    public static final LazyResource<Item> FRIED_WORM = PLATFORM.registerItem(
             new Properties().food(new FoodProperties.Builder()
                     .fast()
                     .nutrition(1)
@@ -32,16 +33,16 @@ public class ModItems {
                     .build()), "fried_worm"
     );
 
-    public static final Supplier<Item> GLOW_WORM_SILK = PLATFORM.registerItem("glow_worm_silk");
+    public static final LazyResource<Item> GLOW_WORM_SILK = PLATFORM.registerItem("glow_worm_silk");
 
-    public static final Supplier<SpawnEggItem> EARTHWORM_SPAWN_EGG = PLATFORM.registerSpawnEgg(
+    public static final LazyResource<SpawnEggItem> EARTHWORM_SPAWN_EGG = PLATFORM.registerSpawnEgg(
             ModEntities.EARTHWORM,
             "#af437c",
             "#af437c",
             "earthworm_spawn_egg"
     );
 
-    public static final Supplier<SpawnEggItem> GLOW_WORM_SPAWN_EGG = PLATFORM.registerSpawnEgg(
+    public static final LazyResource<SpawnEggItem> GLOW_WORM_SPAWN_EGG = PLATFORM.registerSpawnEgg(
             ModEntities.GLOW_WORM,
             "#9df4af",
             "#1fcdc5",

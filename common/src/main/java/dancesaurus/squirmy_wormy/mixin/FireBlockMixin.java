@@ -2,6 +2,8 @@ package dancesaurus.squirmy_wormy.mixin;
 
 import dancesaurus.squirmy_wormy.platform.FlammableBlockProperties;
 import dancesaurus.squirmy_wormy.registries.FlammableBlocks;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
