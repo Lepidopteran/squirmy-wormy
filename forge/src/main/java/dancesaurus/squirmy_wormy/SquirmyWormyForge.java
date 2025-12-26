@@ -38,8 +38,7 @@ public class SquirmyWormyForge {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
     public static final DeferredRegister<Potion> POTIONS = DeferredRegister.create(ForgeRegistries.POTIONS, MOD_ID);
 
-    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(
-            ForgeRegistries.BLOCK_ENTITY_TYPES,
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES,
             MOD_ID
     );
 
@@ -63,8 +62,7 @@ public class SquirmyWormyForge {
             MOD_ID
     );
 
-    public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(
-            ForgeRegistries.RECIPE_SERIALIZERS,
+    public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS,
             MOD_ID
     );
 
@@ -91,7 +89,6 @@ public class SquirmyWormyForge {
 
     private void onSetup(@NotNull FMLCommonSetupEvent event) {
         event.enqueueWork(SquirmyWormy::registerCompostingChances);
-        event.enqueueWork(ModBlocks::registerFlammableBlocks);
     }
 
     private void onFinished(@NotNull FMLCommonSetupEvent event) {
@@ -109,7 +106,9 @@ public class SquirmyWormyForge {
     }
 
     private void onCreativeTab(@NotNull BuildCreativeModeTabContentsEvent event) {
-        VanillaTabModifications.get(event.getTabKey()).forEach(event::accept);
+        VanillaTabModifications.get(event.getTabKey()).forEach((item) -> {
+            event.accept(item.supplier());
+        });
     }
 
     public void registerBusToDeferredRegistries(IEventBus bus) {

@@ -2,11 +2,13 @@ package dancesaurus.squirmy_wormy;
 
 //import dancesaurus.squirmy_wormy.blocks.GlowWormWeb;
 
+import dancesaurus.squirmy_wormy.platform.LazyResource;
 import dancesaurus.squirmy_wormy.platform.VanillaTab;
 import dancesaurus.squirmy_wormy.registries.CompostingChances;
 import dancesaurus.squirmy_wormy.registries.FlammableBlocks;
 import dancesaurus.squirmy_wormy.registries.VanillaTabModifications;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -32,7 +34,7 @@ public class ModBlocks {
 //                    .noOcclusion()), "glow_worm_web", true
 //    );
 
-    public static final Supplier<Block> GLOW_WORM_WOOL = PLATFORM.registerBlockWithItem(
+    public static final LazyResource<Block> GLOW_WORM_WOOL = PLATFORM.registerBlockWithItem(
             () ->
                     new Block(BlockBehaviour.Properties
                             .copy(Blocks.WHITE_WOOL)
@@ -42,7 +44,7 @@ public class ModBlocks {
                             .lightLevel(value -> 1)), "glow_worm_wool"
     );
 
-    public static final Supplier<CarpetBlock> GLOWING_CARPET = PLATFORM.registerBlockWithItem(
+    public static final LazyResource<CarpetBlock> GLOWING_CARPET = PLATFORM.registerBlockWithItem(
             () -> new CarpetBlock(BlockBehaviour.Properties
                     .copy(Blocks.WHITE_CARPET)
                     .mapColor(MapColor.COLOR_LIGHT_BLUE)

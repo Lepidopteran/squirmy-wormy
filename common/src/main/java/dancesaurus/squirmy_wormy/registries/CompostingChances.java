@@ -1,19 +1,19 @@
 package dancesaurus.squirmy_wormy.registries;
 
+import dancesaurus.squirmy_wormy.platform.LazyResource;
 import net.minecraft.world.level.ItemLike;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Supplier;
 
 public final class CompostingChances {
-    private static final Map<Supplier<? extends ItemLike>, Float> ITEM_CHANCES = new HashMap<>();
+    private static final Map<LazyResource<? extends ItemLike>, Float> ITEM_CHANCES = new HashMap<>();
 
-    public static void register(Supplier<? extends ItemLike> item, float chance) {
+    public static void register(LazyResource<? extends ItemLike> item, float chance) {
         ITEM_CHANCES.put(item, chance);
     }
 
-    public static Map<Supplier<? extends ItemLike>, Float> getAll() {
+    public static Map<LazyResource<? extends ItemLike>, Float> getAll() {
         return ITEM_CHANCES;
     }
 

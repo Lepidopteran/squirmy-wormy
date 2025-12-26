@@ -1,6 +1,10 @@
 package dancesaurus.squirmy_wormy.platform;
 
+import dancesaurus.squirmy_wormy.SquirmyWormy;
 import dancesaurus.squirmy_wormy.platform.services.IPlatformHelper;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -35,13 +39,12 @@ public class ForgePlatformHelper implements IPlatformHelper {
 
     @Override
     public boolean isDevelopmentEnvironment() {
-
         return !FMLLoader.isProduction();
     }
 
     @Override
-    public <T extends Item> Supplier<T> registerCustomItem(Supplier<T> item, String name) {
-        return ITEMS.register(name, item);
+    public <T extends Item> LazyResource<T> registerCustomItem(Supplier<T> item, String name) {
+        return new LazyResource<>(name, ITEMS.register(name, item));
     }
 
     @Override
@@ -50,39 +53,43 @@ public class ForgePlatformHelper implements IPlatformHelper {
     }
 
     @Override
-    public <T extends Block> Supplier<T> registerBlock(Supplier<T> block, String name) {
-        return BLOCKS.register(name, block);
+    public <T extends Block> LazyResource<T> registerBlock(Supplier<T> block, String name) {
+        return new LazyResource<>(name, BLOCKS.register(name, block));
     }
 
     @Override
-    public <T extends Mob> Supplier<SpawnEggItem> registerSpawnEgg(
-            Supplier<EntityType<T>> entity,
+    public <T extends Mob> LazyResource<SpawnEggItem> registerSpawnEgg(
+            LazyResource<EntityType<T>> entity,
             String backgroundColor,
             String foregroundColor,
             String name
     ) {
-        return ITEMS.register(
-                name,
-                () -> new ForgeSpawnEggItem(
-                        entity,
+        return new LazyResource<>(
+                name, ITEMS.register(
+                name, () -> new ForgeSpawnEggItem(
+                        entity.supplier(),
                         Integer.parseInt(backgroundColor.substring(1), 16),
                         Integer.parseInt(foregroundColor.substring(1), 16),
                         new Item.Properties()
                 )
+        )
         );
     }
 
     @Override
-    public <T extends Entity> Supplier<EntityType<T>> registerEntity(
+    public <T extends Entity> LazyResource<EntityType<T>> registerEntity(
             String name,
             EntityType.EntityFactory<T> factory,
             MobCategory category,
             float width,
             float height
     ) {
-        return ENTITY_TYPES.register(
+        return new LazyResource<>(
                 name,
-                () -> EntityType.Builder.of(factory, category).sized(width, height).build(name)
+                ENTITY_TYPES.register(
+                        name,
+                        () -> EntityType.Builder.of(factory, category).sized(width, height).build(name)
+                )
         );
     }
 }
