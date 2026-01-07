@@ -1,9 +1,16 @@
 package dancesaurus.squirmy_wormy;
 
+import com.mojang.serialization.Codec;
 import dancesaurus.squirmy_wormy.registries.EntityAttributes;
 import dancesaurus.squirmy_wormy.registries.FlammableBlocks;
 import dancesaurus.squirmy_wormy.registries.VanillaTabModifications;
+import net.minecraft.client.Minecraft;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -13,11 +20,18 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.SpawnData;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.world.BiomeModifier;
+import net.minecraftforge.common.world.ForgeBiomeModifiers;
+import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -26,6 +40,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
 import static dancesaurus.squirmy_wormy.SquirmyWormy.MOD_ID;
@@ -38,7 +53,8 @@ public class SquirmyWormyForge {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
     public static final DeferredRegister<Potion> POTIONS = DeferredRegister.create(ForgeRegistries.POTIONS, MOD_ID);
 
-    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES,
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(
+            ForgeRegistries.BLOCK_ENTITY_TYPES,
             MOD_ID
     );
 
@@ -62,7 +78,8 @@ public class SquirmyWormyForge {
             MOD_ID
     );
 
-    public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS,
+    public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(
+            ForgeRegistries.RECIPE_SERIALIZERS,
             MOD_ID
     );
 
@@ -70,6 +87,9 @@ public class SquirmyWormyForge {
             Registries.CREATIVE_MODE_TAB,
             MOD_ID
     );
+
+    public static final DeferredRegister<Codec<? extends BiomeModifier>> BIOME_MODIFIERS =
+            DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, MOD_ID);
 
     // endregion
 
@@ -89,6 +109,23 @@ public class SquirmyWormyForge {
 
     private void onSetup(@NotNull FMLCommonSetupEvent event) {
         event.enqueueWork(SquirmyWormy::registerCompostingChances);
+        event.enqueueWork(() -> {
+            ResourceKey<Biome> biomeKey = ResourceKey.create(
+                    Registries.BIOME,
+                    new ResourceLocation("minecraft", "plains")
+            );
+
+            Holder<Biome> biomeHolder = Minecraft.getInstance().level
+                    .registryAccess()
+                    .registryOrThrow(Registries.BIOME)
+                    .getHolder(biomeKey)
+                    .orElseThrow();
+
+            ForgeBiomeModifiers.AddSpawnsBiomeModifier.singleSpawn(
+                    HolderSet.direct(biomeHolder),
+                    new MobSpawnSettings.SpawnerData(ModEntities.EARTHWORM.get(), 100, 10, 10)
+            );
+        });
     }
 
     private void onFinished(@NotNull FMLCommonSetupEvent event) {
@@ -122,6 +159,7 @@ public class SquirmyWormyForge {
         RECIPE_SERIALIZERS.register(bus);
         POTIONS.register(bus);
         CREATIVE_MODE_TABS.register(bus);
+        BIOME_MODIFIERS.register(bus);
     }
 }
 
