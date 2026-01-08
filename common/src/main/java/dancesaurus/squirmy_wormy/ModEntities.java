@@ -2,16 +2,16 @@ package dancesaurus.squirmy_wormy;
 
 import dancesaurus.squirmy_wormy.entities.Earthworm;
 import dancesaurus.squirmy_wormy.entities.GlowWorm;
+import dancesaurus.squirmy_wormy.platform.BiomeSelection;
 import dancesaurus.squirmy_wormy.platform.LazyResource;
-import dancesaurus.squirmy_wormy.platform.Services;
 import dancesaurus.squirmy_wormy.registries.EntityAttributes;
 import dancesaurus.squirmy_wormy.registries.EntitySpawnPlacements;
+import dancesaurus.squirmy_wormy.registries.biome.SpawnModifiers;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.levelgen.Heightmap;
-
-import java.util.function.Supplier;
 
 import static dancesaurus.squirmy_wormy.platform.Services.PLATFORM;
 
@@ -41,12 +41,16 @@ public class ModEntities {
 				Earthworm::canWormSpawn
 		);
 
+		SpawnModifiers.addSpawn(EARTHWORM, BiomeSelection.allBiomes(), MobCategory.CREATURE, 10, 1, 10);
+
 		EntityAttributes.register(GLOW_WORM, GlowWorm::createAttributes);
+
 		EntitySpawnPlacements.register(
 				GLOW_WORM,
 				SpawnPlacements.Type.ON_GROUND,
 				Heightmap.Types.MOTION_BLOCKING,
 				GlowWorm::canGlowWormSpawn
 		);
+		SpawnModifiers.addSpawn(GLOW_WORM, BiomeSelection.allBiomes(), MobCategory.CREATURE, 10, 1, 10);
 	}
 }

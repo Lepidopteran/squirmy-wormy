@@ -1,17 +1,12 @@
 package dancesaurus.squirmy_wormy;
 
 import com.mojang.serialization.Codec;
+import dancesaurus.squirmy_wormy.platform.Services;
 import dancesaurus.squirmy_wormy.registries.EntityAttributes;
 import dancesaurus.squirmy_wormy.registries.EntitySpawnPlacements;
-import dancesaurus.squirmy_wormy.registries.FlammableBlocks;
 import dancesaurus.squirmy_wormy.registries.VanillaTabModifications;
-import net.minecraft.client.Minecraft;
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderSet;
+import dancesaurus.squirmy_wormy.world.AddSpawnsBiomeModifier;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -23,18 +18,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.level.SpawnData;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.Biomes;
-import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.world.BiomeModifier;
-import net.minecraftforge.common.world.ForgeBiomeModifiers;
-import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
@@ -57,7 +44,8 @@ public class SquirmyWormyForge {
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
 	public static final DeferredRegister<Potion> POTIONS = DeferredRegister.create(ForgeRegistries.POTIONS, MOD_ID);
 
-	public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES,
+	public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(
+			ForgeRegistries.BLOCK_ENTITY_TYPES,
 			MOD_ID
 	);
 
@@ -81,7 +69,8 @@ public class SquirmyWormyForge {
 			MOD_ID
 	);
 
-	public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS,
+	public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(
+			ForgeRegistries.RECIPE_SERIALIZERS,
 			MOD_ID
 	);
 
@@ -90,8 +79,17 @@ public class SquirmyWormyForge {
 			MOD_ID
 	);
 
+	public static final DeferredRegister<Codec<? extends BiomeModifier>> BIOME_MODIFIER_SERIALIZERS = DeferredRegister.create(
+			ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS,
+			MOD_ID
+	);
 
 	// endregion
+
+	public static RegistryObject<Codec<AddSpawnsBiomeModifier>> ADD_SPAWNS_CODEC = BIOME_MODIFIER_SERIALIZERS.register(
+			"add_entity_spawns",
+			() -> Codec.unit(AddSpawnsBiomeModifier::new)
+	);
 
 	public SquirmyWormyForge() {
 		SquirmyWormy.initialize();
@@ -119,7 +117,9 @@ public class SquirmyWormyForge {
 	public void onRegisterAttributes(@NotNull EntityAttributeCreationEvent event) {
 		EntityAttributes.getAll().forEach((type, attributes) -> {
 			EntityType<? extends LivingEntity> entityType = type.get();
-			SquirmyWormy.LOGGER.info("Registering attributes for {}", entityType);
+			if (Services.PLATFORM.isDevelopmentEnvironment()) {
+				SquirmyWormy.LOGGER.info("Registering attributes for {}", entityType);
+			}
 
 			event.put(entityType, attributes.get().build());
 		});
@@ -137,7 +137,9 @@ public class SquirmyWormyForge {
 			EntityType<Mob> entityType = (EntityType<Mob>) lazyEntityType.get();
 			SpawnPlacements.SpawnPredicate<Mob> predicate = (SpawnPlacements.SpawnPredicate<Mob>) props.decoratorPredicate();
 
-			SquirmyWormy.LOGGER.info("Registering spawn placement for {}", entityType);
+			if (Services.PLATFORM.isDevelopmentEnvironment()) {
+				SquirmyWormy.LOGGER.info("Registering spawn placement for {}", entityType);
+			}
 
 			event.register(
 					entityType,
@@ -150,6 +152,7 @@ public class SquirmyWormyForge {
 	}
 
 	public void registerBusToDeferredRegistries(IEventBus bus) {
+		BIOME_MODIFIER_SERIALIZERS.register(bus);
 		BLOCKS.register(bus);
 		ITEMS.register(bus);
 		ENTITY_TYPES.register(bus);

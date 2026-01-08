@@ -1,15 +1,18 @@
 package dancesaurus.squirmy_wormy;
 
+import dancesaurus.squirmy_wormy.platform.BiomeSelection;
+import dancesaurus.squirmy_wormy.platform.Services;
 import dancesaurus.squirmy_wormy.registries.EntityAttributes;
 import dancesaurus.squirmy_wormy.registries.EntitySpawnPlacements;
-import dancesaurus.squirmy_wormy.registries.FlammableBlocks;
 import dancesaurus.squirmy_wormy.registries.VanillaTabModifications;
+import dancesaurus.squirmy_wormy.registries.biome.SpawnModifiers;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
-import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
+import net.fabricmc.fabric.impl.biome.modification.BiomeSelectionContextImpl;
 import net.minecraft.world.entity.*;
 
 public class SquirmyWormyFabric implements ModInitializer {
@@ -23,16 +26,18 @@ public class SquirmyWormyFabric implements ModInitializer {
 
 		EntityAttributes.getAll().forEach((type, attributes) -> {
 			EntityType<? extends LivingEntity> entityType = type.get();
-			SquirmyWormy.LOGGER.info("Registering attributes for {}", entityType);
-
+			if (Services.PLATFORM.isDevelopmentEnvironment()) {
+				SquirmyWormy.LOGGER.info("Registering attributes for {}", entityType);
+			}
 			FabricDefaultAttributeRegistry.register(entityType, attributes.get());
 		});
 
 		EntitySpawnPlacements.getAll().forEach((type, props) -> {
 			EntityType<Mob> entityType = (EntityType<Mob>) type.get();
 			SpawnPlacements.SpawnPredicate<Mob> predicate = (SpawnPlacements.SpawnPredicate<Mob>) props.decoratorPredicate();
-
-			SquirmyWormy.LOGGER.info("Registering Spawn Placement for {}", entityType);
+			if (Services.PLATFORM.isDevelopmentEnvironment()) {
+				SquirmyWormy.LOGGER.info("Registering Spawn Placement for {}", entityType);
+			}
 			SpawnPlacements.register(entityType, props.decoratorType(), props.heightMapType(), predicate);
 		});
 
@@ -44,8 +49,30 @@ public class SquirmyWormyFabric implements ModInitializer {
 			});
 		});
 
+		SpawnModifiers.spawnAdditions().forEach((lazyEntity, props) -> {
+			EntityType<?> entityType = lazyEntity.get();
+
+			BiomeModifications.addSpawn(
+					context -> {
+						BiomeSelection selection = props.selection();
+						boolean canSpawn = selection.selectsAllBiomes()
+										   || selection.tags().stream().anyMatch(context::hasTag)
+										   || selection.biomes().stream().anyMatch(context.getBiomeKey()::equals);
+
+						if (Services.PLATFORM.isDevelopmentEnvironment()) {
+							SquirmyWormy.LOGGER.info(
+									"Adding {} spawn to biome {}",
+									entityType.getDescriptionId(),
+									context.getBiomeKey().location()
+							);
+						}
+
+						return canSpawn;
+					}, props.category(), lazyEntity.get(), props.weight(), props.minGroupSize(), props.maxGroupSize()
+			);
+		});
+
 
 		SquirmyWormy.LOGGER.info("Y O U ' V E  G O T  W O R M S !");
 	}
-
 }
