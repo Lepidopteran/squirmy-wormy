@@ -59,7 +59,8 @@ public class SquirmyWormyFabric implements ModInitializer {
 										   || selection.tags().stream().anyMatch(context::hasTag)
 										   || selection.biomes().stream().anyMatch(context.getBiomeKey()::equals);
 
-						if (Services.PLATFORM.isDevelopmentEnvironment() && canSpawn) {
+						if (Services.PLATFORM.isDevelopmentEnvironment()
+							&& canSpawn) {
 							SquirmyWormy.LOGGER.info(
 									"Adding {} spawn to biome {}",
 									entityType.getDescriptionId(),
