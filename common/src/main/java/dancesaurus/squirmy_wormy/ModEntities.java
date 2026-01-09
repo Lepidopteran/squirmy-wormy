@@ -32,6 +32,7 @@ public class ModEntities {
 			0.4f
 	);
 
+	// TODO: Figure out why adding multiple entity spawns freezes the game
 	public static void initialize() {
 		EntityAttributes.register(EARTHWORM, Earthworm::createAttributes);
 		EntitySpawnPlacements.register(
@@ -40,7 +41,6 @@ public class ModEntities {
 				Heightmap.Types.MOTION_BLOCKING,
 				Earthworm::canWormSpawn
 		);
-
 		SpawnModifiers.addSpawn(EARTHWORM, BiomeSelection.allBiomes(), MobCategory.CREATURE, 10, 1, 10);
 
 		EntityAttributes.register(GLOW_WORM, GlowWorm::createAttributes);
@@ -51,6 +51,7 @@ public class ModEntities {
 				Heightmap.Types.MOTION_BLOCKING,
 				GlowWorm::canGlowWormSpawn
 		);
-		SpawnModifiers.addSpawn(GLOW_WORM, BiomeSelection.allBiomes(), MobCategory.CREATURE, 10, 1, 10);
+
+//		SpawnModifiers.addSpawn(GLOW_WORM, BiomeSelection.allBiomes(), MobCategory.CREATURE, 10, 1, 10);
 	}
 }
