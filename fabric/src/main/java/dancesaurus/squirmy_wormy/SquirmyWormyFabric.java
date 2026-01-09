@@ -8,12 +8,13 @@ import dancesaurus.squirmy_wormy.registries.VanillaTabModifications;
 import dancesaurus.squirmy_wormy.registries.biome.SpawnModifiers;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.level.block.Blocks;
 
 public class SquirmyWormyFabric implements ModInitializer {
 
@@ -53,12 +54,11 @@ public class SquirmyWormyFabric implements ModInitializer {
 			BiomeModifications.addSpawn(
 					context -> {
 						BiomeSelection selection = props.selection();
-						boolean canSpawn = selection.selectsAllBiomes()
-										   || selection.tags().stream().anyMatch(context::hasTag)
-										   || selection.biomes().stream().anyMatch(context.getBiomeKey()::equals);
+						boolean canSpawn = selection.selectsAllBiomes() ||
+								selection.tags().stream().anyMatch(context::hasTag) ||
+								selection.biomes().stream().anyMatch(context.getBiomeKey()::equals);
 
-						if (Services.PLATFORM.isDevelopmentEnvironment()
-							&& canSpawn) {
+						if (Services.PLATFORM.isDevelopmentEnvironment() && canSpawn) {
 							SquirmyWormy.LOGGER.info(
 									"Adding {} spawn to biome {}",
 									entityType.getDescriptionId(),
@@ -71,6 +71,16 @@ public class SquirmyWormyFabric implements ModInitializer {
 			);
 		});
 
+		PlayerBlockBreakEvents.AFTER.register((
+				(level, player, blockPos, blockState, blockEntity) -> {
+					if (!level.isClientSide) {
+						RandomSource random = level.random;
+						if (blockState.getBlock() == Blocks.DIRT && random.nextFloat() <= 0.05) {
+							ModEntities.EARTHWORM.get().spawn((ServerLevel) level, blockPos, MobSpawnType.TRIGGERED);
+						}
+					}
+				}
+		));
 
 		SquirmyWormy.LOGGER.info("Y O U ' V E  G O T  W O R M S !");
 	}
