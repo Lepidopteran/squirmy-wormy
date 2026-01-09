@@ -39,6 +39,7 @@ public class SquirmyWormyFabric implements ModInitializer {
 			if (Services.PLATFORM.isDevelopmentEnvironment()) {
 				SquirmyWormy.LOGGER.info("Registering Spawn Placement for {}", entityType);
 			}
+
 			SpawnPlacements.register(entityType, props.decoratorType(), props.heightMapType(), predicate);
 		});
 
@@ -60,14 +61,14 @@ public class SquirmyWormyFabric implements ModInitializer {
 
 						if (Services.PLATFORM.isDevelopmentEnvironment() && canSpawn) {
 							SquirmyWormy.LOGGER.info(
-									"Adding {} spawn to biome {}",
+									"Adding \"{}\" spawn to biome \"{}\"",
 									entityType.getDescriptionId(),
 									context.getBiomeKey().location()
 							);
 						}
 
 						return canSpawn;
-					}, props.category(), lazyEntity.get(), props.weight(), props.minGroupSize(), props.maxGroupSize()
+					}, props.category(), entityType, props.weight(), props.minGroupSize(), props.maxGroupSize()
 			);
 		});
 

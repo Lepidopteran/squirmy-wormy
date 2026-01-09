@@ -18,48 +18,49 @@ import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ModifiableBiomeInfo;
 import org.jetbrains.annotations.NotNull;
 
+import static dancesaurus.squirmy_wormy.SquirmyWormy.LOGGER;
 import static dancesaurus.squirmy_wormy.platform.Services.PLATFORM;
 
 public class AddSpawnsBiomeModifier implements BiomeModifier {
-	@Override
-	public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
-		if (phase
-			== Phase.ADD) {
-			SpawnModifiers.spawnAdditions().forEach((lazyEntity, props) -> {
-				if (props.selection().tags().stream().noneMatch(biome::containsTag)
-					&& props.selection().biomes().stream().noneMatch(biome::is)
-					&& !props.selection().selectsAllBiomes()) {
-					return;
-				}
+    @Override
+    public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
+        if (phase == Phase.ADD) {
+            SpawnModifiers.spawnAdditions().forEach((lazyEntity, props) -> {
+                if (props.selection().tags().stream().noneMatch(biome::containsTag) && props
+                        .selection()
+                        .biomes()
+                        .stream()
+                        .noneMatch(biome::is) && !props.selection().selectsAllBiomes()) {
+                    return;
+                }
 
-				EntityType<?> entityType = lazyEntity.get();
+                EntityType<?> entityType = lazyEntity.get();
 
-				if (PLATFORM.isDevelopmentEnvironment()) {
-					SquirmyWormy.LOGGER.info(
-							"Adding {} spawn to biome {}",
-							entityType.getDescriptionId(),
-							biome.unwrapKey().map(ResourceKey::location).orElse(null)
-					);
-				}
+                if (PLATFORM.isDevelopmentEnvironment()) {
+                    LOGGER.info(
+                            "Adding \"{}\" spawn to biome \"{}\"",
+                            entityType.getDescriptionId(),
+                            biome.unwrapKey().map(ResourceKey::location).orElse(null)
+                    );
+                }
 
-				builder.getMobSpawnSettings().addSpawn(
-						props.category(),
-						new MobSpawnSettings.SpawnerData(
-								entityType,
-								props.weight(),
-								props.minGroupSize(),
-								props.maxGroupSize()
-						)
-				);
+                builder.getMobSpawnSettings().addSpawn(
+                        props.category(),
+                        new MobSpawnSettings.SpawnerData(
+                                entityType,
+                                props.weight(),
+                                props.minGroupSize(),
+                                props.maxGroupSize()
+                        )
+                );
+            });
+        }
+    }
 
-			});
-		}
-	}
-
-	@Override
-	public @NotNull Codec<? extends BiomeModifier> codec() {
-		return SquirmyWormyForge.ADD_SPAWNS_CODEC.get();
-	}
+    @Override
+    public @NotNull Codec<? extends BiomeModifier> codec() {
+        return SquirmyWormyForge.ADD_SPAWNS_CODEC.get();
+    }
 }
 
 
