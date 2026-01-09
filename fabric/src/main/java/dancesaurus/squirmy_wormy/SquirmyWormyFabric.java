@@ -8,12 +8,12 @@ import dancesaurus.squirmy_wormy.registries.VanillaTabModifications;
 import dancesaurus.squirmy_wormy.registries.biome.SpawnModifiers;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
-import net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext;
-import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
-import net.fabricmc.fabric.impl.biome.modification.BiomeSelectionContextImpl;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.SpawnPlacements;
 
 public class SquirmyWormyFabric implements ModInitializer {
 
@@ -41,13 +41,11 @@ public class SquirmyWormyFabric implements ModInitializer {
 			SpawnPlacements.register(entityType, props.decoratorType(), props.heightMapType(), predicate);
 		});
 
-		VanillaTabModifications.getAll().forEach((tab, items) -> {
-			ItemGroupEvents.modifyEntriesEvent(tab.key()).register(entries -> {
-				items.forEach(item -> {
-					entries.accept(item.get());
-				});
-			});
-		});
+		VanillaTabModifications
+				.getAll()
+				.forEach((tab, items) -> ItemGroupEvents
+						.modifyEntriesEvent(tab.key())
+						.register(entries -> items.forEach(item -> entries.accept(item.get()))));
 
 		SpawnModifiers.spawnAdditions().forEach((lazyEntity, props) -> {
 			EntityType<?> entityType = lazyEntity.get();
