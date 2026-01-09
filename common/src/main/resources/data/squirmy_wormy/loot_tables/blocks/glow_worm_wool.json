@@ -37,7 +37,7 @@
                   ]
                 }
               ],
-              "name": "squirmy_wormy:block/glow_worm_wool"
+              "name": "squirmy_wormy:glow_worm_wool"
             },
             {
               "type": "minecraft:item",
@@ -46,7 +46,7 @@
                   "condition": "minecraft:survives_explosion"
                 }
               ],
-              "name": "squirmy_wormy:block/glow_worm_wool"
+              "name": "squirmy_wormy:glow_worm_wool"
             }
           ]
         }
