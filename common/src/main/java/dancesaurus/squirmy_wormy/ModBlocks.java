@@ -23,7 +23,7 @@ public class ModBlocks {
 	public static final LazyResource<GlowWormWeb> GLOW_WORM_WEB = PLATFORM.registerBlockWithItem(
 			() -> new GlowWormWeb(BlockBehaviour.Properties
 					.of()
-					.sound(SoundType.WOOL)
+					.sound(SoundType.BIG_DRIPLEAF)
 					.noCollission()
 					.strength(1.0f)
 					.emissiveRendering(ModBlocks::always)
