@@ -1,7 +1,6 @@
 package dancesaurus.squirmy_wormy.entities;
 
 import dancesaurus.squirmy_wormy.ModEntities;
-import dancesaurus.squirmy_wormy.SquirmyWormy;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -11,7 +10,6 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.behavior.AnimalMakeLove;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
@@ -22,9 +20,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-
-import java.util.Set;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -36,81 +31,86 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+import java.util.Set;
+
 public class GlowWorm extends Animal implements GeoEntity {
-    protected static final RawAnimation WIGGLE_ANIMATION = RawAnimation.begin().thenLoop("glow_worm_wiggle");
-    private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
+	protected static final RawAnimation WIGGLE_ANIMATION = RawAnimation.begin().thenLoop("glow_worm_wiggle");
+	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
 
-    public GlowWorm(EntityType<? extends Animal> entityType, Level world) {
-        super(entityType, world);
-    }
+	public GlowWorm(EntityType<? extends Animal> entityType, Level world) {
+		super(entityType, world);
+	}
 
-    @Override
-    protected void registerGoals() {
-        this.goalSelector.addGoal(1, new RandomStrollGoal(this, 0.5D));
-        this.goalSelector.addGoal(2, new BreedGoal(this, 1.15F));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, Ingredient.of(Items.DIRT), false));
-        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 4.0F));
-        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
-    }
+	@Override
+	protected void registerGoals() {
+		this.goalSelector.addGoal(1, new RandomStrollGoal(this, 0.5D));
+		this.goalSelector.addGoal(2, new BreedGoal(this, 1.15F));
+		this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, Ingredient.of(Items.DIRT), false));
+		this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 4.0F));
+		this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+	}
 
-    private static final Set<Block> VALID_SPAWN_BLOCKS =
-            Set.of(
-                    Blocks.MUD,
-                    Blocks.BIG_DRIPLEAF,
-                    Blocks.ANDESITE,
-                    Blocks.DIORITE,
-                    Blocks.STONE,
-                    Blocks.DEEPSLATE,
-                    Blocks.MOSS_BLOCK
-            );
-
-
-    public static boolean canGlowWormSpawn(
-            EntityType<GlowWorm> entityType,
-            @NotNull ServerLevelAccessor level,
-            MobSpawnType reason,
-            @NotNull BlockPos pos,
-            RandomSource random
-    ) {
-        return VALID_SPAWN_BLOCKS.contains(level.getLevel().getBlockState(pos.below()).getBlock());
-    }
-
-    @Nullable
-    @Override
-    public AgeableMob getBreedOffspring(@NotNull ServerLevel world, @NotNull AgeableMob entity) {
-        return ModEntities.GLOW_WORM.get().create(world);
-    }
+	private static final Set<Block> VALID_SPAWN_BLOCKS = Set.of(
+			Blocks.MUD,
+			Blocks.BIG_DRIPLEAF,
+			Blocks.ANDESITE,
+			Blocks.DIORITE,
+			Blocks.STONE,
+			Blocks.DEEPSLATE,
+			Blocks.MOSS_BLOCK
+	);
 
 
-    @Override
-    public void registerControllers(final AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "Walking", 5, this::walkAnimationController));
-    }
+	public static boolean canGlowWormSpawn(
+			EntityType<GlowWorm> entityType,
+			@NotNull ServerLevelAccessor levelAccessor,
+			MobSpawnType reason,
+			@NotNull BlockPos pos,
+			RandomSource random
+	) {
+		if (!reason.equals(MobSpawnType.NATURAL)) {
+			return false;
+		}
 
-    protected <E extends GlowWorm> PlayState walkAnimationController(final AnimationState<E> event) {
-        return event.setAndContinue(WIGGLE_ANIMATION);
-    }
+		return VALID_SPAWN_BLOCKS.contains(levelAccessor.getLevel().getBlockState(pos.below()).getBlock());
+	}
 
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return this.geoCache;
-    }
+	@Nullable
+	@Override
+	public AgeableMob getBreedOffspring(@NotNull ServerLevel world, @NotNull AgeableMob entity) {
+		return ModEntities.GLOW_WORM.get().create(world);
+	}
 
-    @Override
-    public boolean isFood(ItemStack stack) {
-        return stack.is(Items.MUD);
-    }
 
-    @Override
-    public boolean onClimbable() {
-        return super.horizontalCollision;
-    }
+	@Override
+	public void registerControllers(final AnimatableManager.ControllerRegistrar controllers) {
+		controllers.add(new AnimationController<>(this, "Walking", 5, this::walkAnimationController));
+	}
 
-    public static AttributeSupplier.Builder createAttributes() {
-        return Mob
-                .createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 1)
-                .add(Attributes.MOVEMENT_SPEED, 0.1)
-                .add(Attributes.FOLLOW_RANGE, 20);
-    }
+	protected <E extends GlowWorm> PlayState walkAnimationController(final AnimationState<E> event) {
+		return event.setAndContinue(WIGGLE_ANIMATION);
+	}
+
+	@Override
+	public AnimatableInstanceCache getAnimatableInstanceCache() {
+		return this.geoCache;
+	}
+
+	@Override
+	public boolean isFood(ItemStack stack) {
+		return stack.is(Items.MUD);
+	}
+
+	@Override
+	public boolean onClimbable() {
+		return super.horizontalCollision;
+	}
+
+	public static AttributeSupplier.Builder createAttributes() {
+		return Mob
+				.createMobAttributes()
+				.add(Attributes.MAX_HEALTH, 1)
+				.add(Attributes.MOVEMENT_SPEED, 0.1)
+				.add(Attributes.FOLLOW_RANGE, 20);
+	}
 }
