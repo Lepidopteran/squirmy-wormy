@@ -1,9 +1,6 @@
 package dancesaurus.squirmy_wormy.mixin;
 
-import dancesaurus.squirmy_wormy.platform.FlammableBlockProperties;
 import dancesaurus.squirmy_wormy.registries.FlammableBlocks;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -19,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class FireBlockMixin {
     @Inject(at = @At("HEAD"), method = "getBurnOdds", cancellable = true)
     private void addBurnOdds(BlockState block, CallbackInfoReturnable<Integer> info) {
-        FlammableBlockProperties properties = FlammableBlocks.getBlockFlammability(block.getBlock());
+        FlammableBlocks.FlammableBlockProperties properties = FlammableBlocks.getBlockFlammability(block.getBlock());
         if (properties != null) {
             if (block.hasProperty(BlockStateProperties.WATERLOGGED) && block.getValue(BlockStateProperties.WATERLOGGED)) {
                 info.setReturnValue(0);
@@ -31,7 +28,7 @@ public abstract class FireBlockMixin {
 
     @Inject(at = @At("HEAD"), method = "getIgniteOdds(Lnet/minecraft/world/level/block/state/BlockState;)I", cancellable = true)
     private void addIgniteOdds(BlockState block, CallbackInfoReturnable<Integer> info) {
-        FlammableBlockProperties properties = FlammableBlocks.getBlockFlammability(block.getBlock());
+        FlammableBlocks.FlammableBlockProperties properties = FlammableBlocks.getBlockFlammability(block.getBlock());
 
         if (properties != null) {
             if (block.hasProperty(BlockStateProperties.WATERLOGGED) && block.getValue(BlockStateProperties.WATERLOGGED)) {
