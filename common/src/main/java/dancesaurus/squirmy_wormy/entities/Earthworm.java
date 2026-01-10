@@ -60,8 +60,8 @@ public class Earthworm extends Animal implements GeoEntity {
 		this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, Ingredient.of(Items.DIRT), false));
 		this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 4.0F));
 		this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(6, new MeleeAttackGoal(this, 2.0f, true));
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Zombie.class, true));
-
 	}
 
 	private static final Set<Block> VALID_SPAWN_BLOCKS = Set.of(
