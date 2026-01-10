@@ -18,71 +18,76 @@ import net.minecraft.world.level.block.Blocks;
 
 public class SquirmyWormyFabric implements ModInitializer {
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public void onInitialize() {
-		SquirmyWormy.initialize();
-		SquirmyWormy.registerCompostingChances();
-		ModBlocks.registerFlammableBlocks();
+    @Override
+    public void onInitialize() {
+        SquirmyWormy.initialize();
+        SquirmyWormy.registerCompostingChances();
+        ModBlocks.registerFlammableBlocks();
 
-		EntityAttributes.getAll().forEach((type, attributes) -> {
-			EntityType<? extends LivingEntity> entityType = type.get();
-			if (Services.PLATFORM.isDevelopmentEnvironment()) {
-				SquirmyWormy.LOGGER.info("Registering attributes for {}", entityType);
-			}
-			FabricDefaultAttributeRegistry.register(entityType, attributes.get());
-		});
+        registerEntityAttributes();
+        registerSpawnRestrictions();
+        registerSpawnAdditions();
 
-		SpawnRestrictions.getAll().forEach((type, props) -> {
-			EntityType<Mob> entityType = (EntityType<Mob>) type.get();
-			SpawnPlacements.SpawnPredicate<Mob> predicate = (SpawnPlacements.SpawnPredicate<Mob>) props.decoratorPredicate();
-			if (Services.PLATFORM.isDevelopmentEnvironment()) {
-				SquirmyWormy.LOGGER.info("Registering Spawn Placement for {}", entityType);
-			}
+        modifyVanillaCreativeTabs();
 
-			SpawnPlacements.register(entityType, props.decoratorType(), props.heightMapType(), predicate);
-		});
+        makeDirtHaveChanceToSpawnEarthworm();
 
-		VanillaTabModifications
-				.getAll()
-				.forEach((tab, items) -> ItemGroupEvents
-						.modifyEntriesEvent(tab.key())
-						.register(entries -> items.forEach(item -> entries.accept(item.get()))));
+        SquirmyWormy.LOGGER.info("Y O U ' V E  G O T  W O R M S !");
+    }
 
-		SpawnModifiers.spawnAdditions().forEach((lazyEntity, props) -> {
-			EntityType<?> entityType = lazyEntity.get();
+    private void modifyVanillaCreativeTabs() {
+        VanillaTabModifications.getAll().forEach((tab, items) -> ItemGroupEvents.modifyEntriesEvent(tab.key()).register(entries -> items.forEach(item -> entries.accept(item.get()))));
 
-			BiomeModifications.addSpawn(
-					context -> {
-						BiomeSelection selection = props.selection();
-						boolean canSpawn = selection.selectsAllBiomes() ||
-								selection.tags().stream().anyMatch(context::hasTag) ||
-								selection.biomes().stream().anyMatch(context.getBiomeKey()::equals);
+    }
 
-						if (Services.PLATFORM.isDevelopmentEnvironment() && canSpawn) {
-							SquirmyWormy.LOGGER.info(
-									"Adding \"{}\" spawn to biome \"{}\"",
-									entityType.getDescriptionId(),
-									context.getBiomeKey().location()
-							);
-						}
+    private void registerEntityAttributes() {
+        EntityAttributes.getAll().forEach((type, attributes) -> {
+            EntityType<? extends LivingEntity> entityType = type.get();
+            if (Services.PLATFORM.isDevelopmentEnvironment()) {
+                SquirmyWormy.LOGGER.info("Registering attributes for {}", entityType);
+            }
+            FabricDefaultAttributeRegistry.register(entityType, attributes.get());
+        });
+    }
 
-						return canSpawn;
-					}, props.category(), entityType, props.weight(), props.minGroupSize(), props.maxGroupSize()
-			);
-		});
+    @SuppressWarnings("unchecked")
+    private void registerSpawnRestrictions() {
+        SpawnRestrictions.getAll().forEach((type, props) -> {
+            EntityType<Mob> entityType = (EntityType<Mob>) type.get();
+            SpawnPlacements.SpawnPredicate<Mob> predicate = (SpawnPlacements.SpawnPredicate<Mob>) props.decoratorPredicate();
+            if (Services.PLATFORM.isDevelopmentEnvironment()) {
+                SquirmyWormy.LOGGER.info("Registering Spawn Placement for {}", entityType);
+            }
 
-		PlayerBlockBreakEvents.AFTER.register((
-				(level, player, blockPos, blockState, blockEntity) -> {
-					if (!level.isClientSide) {
-						RandomSource random = level.random;
-						if (blockState.getBlock() == Blocks.DIRT && random.nextFloat() <= 0.05) {
-							ModEntities.EARTHWORM.get().spawn((ServerLevel) level, blockPos, MobSpawnType.TRIGGERED);
-						}
-					}
-				}
-		));
+            SpawnPlacements.register(entityType, props.decoratorType(), props.heightMapType(), predicate);
+        });
+    }
 
-		SquirmyWormy.LOGGER.info("Y O U ' V E  G O T  W O R M S !");
-	}
+    private void registerSpawnAdditions() {
+        SpawnModifiers.spawnAdditions().forEach((lazyEntity, props) -> {
+            EntityType<?> entityType = lazyEntity.get();
+
+            BiomeModifications.addSpawn(context -> {
+                BiomeSelection selection = props.selection();
+                boolean canSpawn = selection.selectsAllBiomes() || selection.tags().stream().anyMatch(context::hasTag) || selection.biomes().stream().anyMatch(context.getBiomeKey()::equals);
+
+                if (Services.PLATFORM.isDevelopmentEnvironment() && canSpawn) {
+                    SquirmyWormy.LOGGER.info("Adding \"{}\" spawn to biome \"{}\"", entityType.getDescriptionId(), context.getBiomeKey().location());
+                }
+
+                return canSpawn;
+            }, props.category(), entityType, props.weight(), props.minGroupSize(), props.maxGroupSize());
+        });
+    }
+
+    private void makeDirtHaveChanceToSpawnEarthworm() {
+        PlayerBlockBreakEvents.AFTER.register(((level, player, blockPos, blockState, blockEntity) -> {
+            if (!level.isClientSide) {
+                RandomSource random = level.random;
+                if (blockState.getBlock() == Blocks.DIRT && random.nextFloat() <= 0.05) {
+                    ModEntities.EARTHWORM.get().spawn((ServerLevel) level, blockPos, MobSpawnType.TRIGGERED);
+                }
+            }
+        }));
+    }
 }
