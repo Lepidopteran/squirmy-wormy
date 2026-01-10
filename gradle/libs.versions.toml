@@ -16,7 +16,7 @@ yarn = { module = "net.fabricmc:yarn", version.ref = "yarn" }
 fabric = ["fabric_loader", "fabric_api"]
 
 [plugins]
-architectury-plugin = {id = "architectury-plugin", version = "3.4-SNAPSHOT"}
-loom = {id = "dev.architectury.loom", version = "1.11-SNAPSHOT"}
-shadow = { id ="com.gradleup.shadow", version = "8.3.6"}
+architectury-plugin = { id = "architectury-plugin", version = "3.4-SNAPSHOT" }
+loom = { id = "dev.architectury.loom", version = "1.11-SNAPSHOT" }
+shadow = { id = "com.gradleup.shadow", version = "8.3.6" }
 foojay-resolver-convention = { id = "org.gradle.toolchains.foojay-resolver-convention", version = "0.8.0" }

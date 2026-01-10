@@ -11,13 +11,13 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Block;
 
 public class ForgePlatformClientHelper implements IPlatformClientHelper {
-    @Override
-    public <T extends Entity> void registerEntityRenderer(
-            LazyResource<EntityType<T>> type,
-            EntityRendererProvider<T> renderProvider
-    ) {
-        EntityRenderers.register(type.get(), renderProvider);
-    }
+	@Override
+	public <T extends Entity> void registerEntityRenderer(
+			LazyResource<EntityType<T>> type,
+			EntityRendererProvider<T> renderProvider
+	) {
+		EntityRenderers.register(type.get(), renderProvider);
+	}
 
 	@Override
 	@SuppressWarnings("deprecation")

@@ -11,31 +11,31 @@ import net.minecraft.world.item.CreativeModeTab;
  */
 public enum VanillaTab {
 
-    BUILDING_BLOCKS("building_blocks"),
-    COLORED_BLOCKS("colored_blocks"),
-    NATURAL_BLOCKS("natural_blocks"),
-    FUNCTIONAL_BLOCKS("functional_blocks"),
-    REDSTONE_BLOCKS("redstone_blocks"),
-    HOTBAR("hotbar"),
-    SEARCH("search"),
-    TOOLS_AND_UTILITIES("tools_and_utilities"),
-    COMBAT("combat"),
-    FOOD_AND_DRINKS("food_and_drinks"),
-    INGREDIENTS("ingredients"),
-    SPAWN_EGGS("spawn_eggs"),
-    OP_BLOCKS("op_blocks"),
-    INVENTORY("inventory");
+	BUILDING_BLOCKS("building_blocks"),
+	COLORED_BLOCKS("colored_blocks"),
+	NATURAL_BLOCKS("natural_blocks"),
+	FUNCTIONAL_BLOCKS("functional_blocks"),
+	REDSTONE_BLOCKS("redstone_blocks"),
+	HOTBAR("hotbar"),
+	SEARCH("search"),
+	TOOLS_AND_UTILITIES("tools_and_utilities"),
+	COMBAT("combat"),
+	FOOD_AND_DRINKS("food_and_drinks"),
+	INGREDIENTS("ingredients"),
+	SPAWN_EGGS("spawn_eggs"),
+	OP_BLOCKS("op_blocks"),
+	INVENTORY("inventory");
 
-    private final ResourceKey<CreativeModeTab> key;
+	private final ResourceKey<CreativeModeTab> key;
 
-    VanillaTab(String id) {
-        this.key = ResourceKey.create(
-                Registries.CREATIVE_MODE_TAB,
-                new ResourceLocation("minecraft", id)
-        );
-    }
+	VanillaTab(String id) {
+		this.key = ResourceKey.create(
+				Registries.CREATIVE_MODE_TAB,
+				new ResourceLocation("minecraft", id)
+		);
+	}
 
-    public ResourceKey<CreativeModeTab> key() {
-        return key;
-    }
+	public ResourceKey<CreativeModeTab> key() {
+		return key;
+	}
 }

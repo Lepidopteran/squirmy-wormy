@@ -18,7 +18,8 @@ public final class SpawnRestrictions {
 			Heightmap.Types heightMapType,
 			@NotNull
 			SpawnPlacements.SpawnPredicate<T> decoratorPredicate
-	) {}
+	) {
+	}
 
 	private static final Map<LazyResource<? extends EntityType<? extends LivingEntity>>, SpawnPlacementProperties<? extends Mob>> SPAWN_PLACEMENTS = new HashMap<>();
 

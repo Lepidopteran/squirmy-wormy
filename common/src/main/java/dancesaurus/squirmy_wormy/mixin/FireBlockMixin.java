@@ -14,28 +14,28 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(FireBlock.class)
 public abstract class FireBlockMixin {
-    @Inject(at = @At("HEAD"), method = "getBurnOdds", cancellable = true)
-    private void addBurnOdds(BlockState block, CallbackInfoReturnable<Integer> info) {
-        FlammableBlocks.FlammableBlockProperties properties = FlammableBlocks.getBlockFlammability(block.getBlock());
-        if (properties != null) {
-            if (block.hasProperty(BlockStateProperties.WATERLOGGED) && block.getValue(BlockStateProperties.WATERLOGGED)) {
-                info.setReturnValue(0);
-            } else {
-                info.setReturnValue(properties.flammability());
-            }
-        }
-    }
+	@Inject(at = @At("HEAD"), method = "getBurnOdds", cancellable = true)
+	private void addBurnOdds(BlockState block, CallbackInfoReturnable<Integer> info) {
+		FlammableBlocks.FlammableBlockProperties properties = FlammableBlocks.getBlockFlammability(block.getBlock());
+		if (properties != null) {
+			if (block.hasProperty(BlockStateProperties.WATERLOGGED) && block.getValue(BlockStateProperties.WATERLOGGED)) {
+				info.setReturnValue(0);
+			} else {
+				info.setReturnValue(properties.flammability());
+			}
+		}
+	}
 
-    @Inject(at = @At("HEAD"), method = "getIgniteOdds(Lnet/minecraft/world/level/block/state/BlockState;)I", cancellable = true)
-    private void addIgniteOdds(BlockState block, CallbackInfoReturnable<Integer> info) {
-        FlammableBlocks.FlammableBlockProperties properties = FlammableBlocks.getBlockFlammability(block.getBlock());
+	@Inject(at = @At("HEAD"), method = "getIgniteOdds(Lnet/minecraft/world/level/block/state/BlockState;)I", cancellable = true)
+	private void addIgniteOdds(BlockState block, CallbackInfoReturnable<Integer> info) {
+		FlammableBlocks.FlammableBlockProperties properties = FlammableBlocks.getBlockFlammability(block.getBlock());
 
-        if (properties != null) {
-            if (block.hasProperty(BlockStateProperties.WATERLOGGED) && block.getValue(BlockStateProperties.WATERLOGGED)) {
-                info.setReturnValue(0);
-            } else {
-                info.setReturnValue(properties.spreadChance());
-            }
-        }
-    }
+		if (properties != null) {
+			if (block.hasProperty(BlockStateProperties.WATERLOGGED) && block.getValue(BlockStateProperties.WATERLOGGED)) {
+				info.setReturnValue(0);
+			} else {
+				info.setReturnValue(properties.spreadChance());
+			}
+		}
+	}
 }

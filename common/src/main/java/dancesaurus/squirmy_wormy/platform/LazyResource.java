@@ -6,11 +6,11 @@ import net.minecraft.resources.ResourceLocation;
 import java.util.function.Supplier;
 
 public record LazyResource<T>(String path, Supplier<T> supplier) {
-    public T get() {
-        return supplier.get();
-    }
+	public T get() {
+		return supplier.get();
+	}
 
-    public ResourceLocation identifier() {
-        return new ResourceLocation(SquirmyWormy.MOD_ID, path);
-    }
+	public ResourceLocation identifier() {
+		return new ResourceLocation(SquirmyWormy.MOD_ID, path);
+	}
 }

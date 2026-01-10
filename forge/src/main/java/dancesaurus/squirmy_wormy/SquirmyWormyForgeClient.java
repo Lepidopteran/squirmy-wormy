@@ -8,8 +8,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 @Mod.EventBusSubscriber(modid = SquirmyWormy.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class SquirmyWormyForgeClient {
 
-    @SubscribeEvent
-    public static void onClientSetup(FMLClientSetupEvent event) {
-        SquirmyWormyClient.initialize();
-    }
+	@SubscribeEvent
+	public static void onClientSetup(FMLClientSetupEvent event) {
+		SquirmyWormyClient.initialize();
+	}
 }

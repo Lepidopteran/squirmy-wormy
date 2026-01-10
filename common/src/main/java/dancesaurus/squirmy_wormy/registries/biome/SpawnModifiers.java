@@ -1,7 +1,7 @@
 package dancesaurus.squirmy_wormy.registries.biome;
 
-import dancesaurus.squirmy_wormy.platform.LazyResource;
 import dancesaurus.squirmy_wormy.platform.BiomeSelection;
+import dancesaurus.squirmy_wormy.platform.LazyResource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobCategory;
@@ -18,7 +18,8 @@ public class SpawnModifiers {
 			Integer weight,
 			Integer minGroupSize,
 			Integer maxGroupSize
-	) {}
+	) {
+	}
 
 	public static <T extends LivingEntity> void addSpawn(
 			LazyResource<EntityType<T>> type,

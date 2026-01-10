@@ -1,10 +1,6 @@
 package dancesaurus.squirmy_wormy.platform;
 
-import dancesaurus.squirmy_wormy.SquirmyWormy;
 import dancesaurus.squirmy_wormy.platform.services.IPlatformHelper;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -25,71 +21,71 @@ import static dancesaurus.squirmy_wormy.SquirmyWormyForge.*;
 public class ForgePlatformHelper implements IPlatformHelper {
 
 
-    @Override
-    public String getPlatformName() {
+	@Override
+	public String getPlatformName() {
 
-        return "Forge";
-    }
+		return "Forge";
+	}
 
-    @Override
-    public boolean isModLoaded(String modId) {
+	@Override
+	public boolean isModLoaded(String modId) {
 
-        return ModList.get().isLoaded(modId);
-    }
+		return ModList.get().isLoaded(modId);
+	}
 
-    @Override
-    public boolean isDevelopmentEnvironment() {
-        return !FMLLoader.isProduction();
-    }
+	@Override
+	public boolean isDevelopmentEnvironment() {
+		return !FMLLoader.isProduction();
+	}
 
-    @Override
-    public <T extends Item> LazyResource<T> registerCustomItem(Supplier<T> item, String name) {
-        return new LazyResource<>(name, ITEMS.register(name, item));
-    }
+	@Override
+	public <T extends Item> LazyResource<T> registerCustomItem(Supplier<T> item, String name) {
+		return new LazyResource<>(name, ITEMS.register(name, item));
+	}
 
-    @Override
-    public void registerItemCompostingChance(ItemLike item, float chance) {
-        ComposterBlock.COMPOSTABLES.put(item.asItem(), chance);
-    }
+	@Override
+	public void registerItemCompostingChance(ItemLike item, float chance) {
+		ComposterBlock.COMPOSTABLES.put(item.asItem(), chance);
+	}
 
-    @Override
-    public <T extends Block> LazyResource<T> registerBlock(Supplier<T> block, String name) {
-        return new LazyResource<>(name, BLOCKS.register(name, block));
-    }
+	@Override
+	public <T extends Block> LazyResource<T> registerBlock(Supplier<T> block, String name) {
+		return new LazyResource<>(name, BLOCKS.register(name, block));
+	}
 
-    @Override
-    public <T extends Mob> LazyResource<SpawnEggItem> registerSpawnEgg(
-            LazyResource<EntityType<T>> entity,
-            String backgroundColor,
-            String foregroundColor,
-            String name
-    ) {
-        return new LazyResource<>(
-                name, ITEMS.register(
-                name, () -> new ForgeSpawnEggItem(
-                        entity.supplier(),
-                        Integer.parseInt(backgroundColor.substring(1), 16),
-                        Integer.parseInt(foregroundColor.substring(1), 16),
-                        new Item.Properties()
-                )
-        )
-        );
-    }
+	@Override
+	public <T extends Mob> LazyResource<SpawnEggItem> registerSpawnEgg(
+			LazyResource<EntityType<T>> entity,
+			String backgroundColor,
+			String foregroundColor,
+			String name
+	) {
+		return new LazyResource<>(
+				name, ITEMS.register(
+				name, () -> new ForgeSpawnEggItem(
+						entity.supplier(),
+						Integer.parseInt(backgroundColor.substring(1), 16),
+						Integer.parseInt(foregroundColor.substring(1), 16),
+						new Item.Properties()
+				)
+		)
+		);
+	}
 
-    @Override
-    public <T extends Entity> LazyResource<EntityType<T>> registerEntity(
-            String name,
-            EntityType.EntityFactory<T> factory,
-            MobCategory category,
-            float width,
-            float height
-    ) {
-        return new LazyResource<>(
-                name,
-                ENTITY_TYPES.register(
-                        name,
-                        () -> EntityType.Builder.of(factory, category).sized(width, height).build(name)
-                )
-        );
-    }
+	@Override
+	public <T extends Entity> LazyResource<EntityType<T>> registerEntity(
+			String name,
+			EntityType.EntityFactory<T> factory,
+			MobCategory category,
+			float width,
+			float height
+	) {
+		return new LazyResource<>(
+				name,
+				ENTITY_TYPES.register(
+						name,
+						() -> EntityType.Builder.of(factory, category).sized(width, height).build(name)
+				)
+		);
+	}
 }

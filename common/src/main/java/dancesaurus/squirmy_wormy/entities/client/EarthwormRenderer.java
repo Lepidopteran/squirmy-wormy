@@ -12,25 +12,25 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 public class EarthwormRenderer extends GeoEntityRenderer<Earthworm> {
 
-    public EarthwormRenderer(EntityRendererProvider.Context context) {
-        super(context, new DefaultedEntityGeoModel<>(new ResourceLocation(SquirmyWormy.MOD_ID, "earthworm")));
-    }
+	public EarthwormRenderer(EntityRendererProvider.Context context) {
+		super(context, new DefaultedEntityGeoModel<>(new ResourceLocation(SquirmyWormy.MOD_ID, "earthworm")));
+	}
 
-    @Override
-    public void render(
-            @NotNull Earthworm entity,
-            float entityYaw,
-            float partialTick,
-            @NotNull PoseStack poseStack,
-            @NotNull MultiBufferSource bufferSource,
-            int packedLight
-    ) {
-        if(entity.isBaby()) {
-            poseStack.scale(0.5f, 0.5f, 0.5f);
-        } else {
-            poseStack.scale(1f, 1f, 1f);
-        }
+	@Override
+	public void render(
+			@NotNull Earthworm entity,
+			float entityYaw,
+			float partialTick,
+			@NotNull PoseStack poseStack,
+			@NotNull MultiBufferSource bufferSource,
+			int packedLight
+	) {
+		if (entity.isBaby()) {
+			poseStack.scale(0.5f, 0.5f, 0.5f);
+		} else {
+			poseStack.scale(1f, 1f, 1f);
+		}
 
-        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
-    }
+		super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
+	}
 }

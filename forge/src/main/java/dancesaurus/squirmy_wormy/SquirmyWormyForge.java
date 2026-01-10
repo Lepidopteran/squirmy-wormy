@@ -2,9 +2,9 @@ package dancesaurus.squirmy_wormy;
 
 import com.mojang.serialization.Codec;
 import dancesaurus.squirmy_wormy.platform.Services;
+import dancesaurus.squirmy_wormy.registries.VanillaTabModifications;
 import dancesaurus.squirmy_wormy.registries.entity.EntityAttributes;
 import dancesaurus.squirmy_wormy.registries.entity.SpawnRestrictions;
-import dancesaurus.squirmy_wormy.registries.VanillaTabModifications;
 import dancesaurus.squirmy_wormy.world.AddSpawnsBiomeModifier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
@@ -46,7 +46,8 @@ public class SquirmyWormyForge {
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
 	public static final DeferredRegister<Potion> POTIONS = DeferredRegister.create(ForgeRegistries.POTIONS, MOD_ID);
 
-	public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES,
+	public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(
+			ForgeRegistries.BLOCK_ENTITY_TYPES,
 			MOD_ID
 	);
 
@@ -70,7 +71,8 @@ public class SquirmyWormyForge {
 			MOD_ID
 	);
 
-	public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS,
+	public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(
+			ForgeRegistries.RECIPE_SERIALIZERS,
 			MOD_ID
 	);
 
@@ -79,13 +81,15 @@ public class SquirmyWormyForge {
 			MOD_ID
 	);
 
-	public static final DeferredRegister<Codec<? extends BiomeModifier>> BIOME_MODIFIER_SERIALIZERS = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS,
+	public static final DeferredRegister<Codec<? extends BiomeModifier>> BIOME_MODIFIER_SERIALIZERS = DeferredRegister.create(
+			ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS,
 			MOD_ID
 	);
 
 	// endregion
 
-	public static RegistryObject<Codec<AddSpawnsBiomeModifier>> ADD_SPAWNS_CODEC = BIOME_MODIFIER_SERIALIZERS.register("add_entity_spawns",
+	public static RegistryObject<Codec<AddSpawnsBiomeModifier>> ADD_SPAWNS_CODEC = BIOME_MODIFIER_SERIALIZERS.register(
+			"add_entity_spawns",
 			() -> Codec.unit(AddSpawnsBiomeModifier::new)
 	);
 

@@ -1,5 +1,7 @@
 {
   "variants": {
-    "": { "model": "squirmy_wormy:block/glow_worm_wool" }
+    "": {
+      "model": "squirmy_wormy:block/glow_worm_wool"
+    }
   }
 }

@@ -1,13 +1,12 @@
 {
-    "type": "minecraft:campfire_cooking",
-
-    "ingredient": {
-        "item": "squirmy_wormy:earthworm"
-    },
-    "result": "squirmy_wormy:fried_worm",
-    "experience": 0.1,
-    "cookingtime": 40,
-    "group": "FOOD_AND_DRINK"
+  "type": "minecraft:campfire_cooking",
+  "ingredient": {
+    "item": "squirmy_wormy:earthworm"
+  },
+  "result": "squirmy_wormy:fried_worm",
+  "experience": 0.1,
+  "cookingtime": 40,
+  "group": "FOOD_AND_DRINK"
 }
 
 
