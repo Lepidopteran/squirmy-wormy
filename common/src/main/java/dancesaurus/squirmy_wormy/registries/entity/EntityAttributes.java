@@ -1,11 +1,10 @@
-package dancesaurus.squirmy_wormy.registries;
+package dancesaurus.squirmy_wormy.registries.entity;
 
 import dancesaurus.squirmy_wormy.platform.LazyResource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 

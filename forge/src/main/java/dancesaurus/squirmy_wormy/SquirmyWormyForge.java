@@ -2,8 +2,8 @@ package dancesaurus.squirmy_wormy;
 
 import com.mojang.serialization.Codec;
 import dancesaurus.squirmy_wormy.platform.Services;
-import dancesaurus.squirmy_wormy.registries.EntityAttributes;
-import dancesaurus.squirmy_wormy.registries.EntitySpawnPlacements;
+import dancesaurus.squirmy_wormy.registries.entity.EntityAttributes;
+import dancesaurus.squirmy_wormy.registries.entity.SpawnRestrictions;
 import dancesaurus.squirmy_wormy.registries.VanillaTabModifications;
 import dancesaurus.squirmy_wormy.world.AddSpawnsBiomeModifier;
 import net.minecraft.core.registries.Registries;
@@ -130,7 +130,7 @@ public class SquirmyWormyForge {
 
 	@SuppressWarnings("unchecked")
 	private void onRegisterSpawnPlacements(@NotNull SpawnPlacementRegisterEvent event) {
-		EntitySpawnPlacements.getAll().forEach((
+		SpawnRestrictions.getAll().forEach((
 				(lazyEntityType, props) -> {
 					EntityType<Mob> entityType = (EntityType<Mob>) lazyEntityType.get();
 					SpawnPlacements.SpawnPredicate<Mob> predicate = (SpawnPlacements.SpawnPredicate<Mob>) props.decoratorPredicate();

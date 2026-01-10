@@ -1,4 +1,4 @@
-package dancesaurus.squirmy_wormy.registries;
+package dancesaurus.squirmy_wormy.registries.entity;
 
 import dancesaurus.squirmy_wormy.platform.LazyResource;
 import net.minecraft.world.entity.EntityType;
@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class EntitySpawnPlacements {
+public final class SpawnRestrictions {
 
 	public record SpawnPlacementProperties<T extends Mob>(
 			SpawnPlacements.Type decoratorType,
@@ -35,6 +35,6 @@ public final class EntitySpawnPlacements {
 		return SPAWN_PLACEMENTS;
 	}
 
-	private EntitySpawnPlacements() {
+	private SpawnRestrictions() {
 	}
 }

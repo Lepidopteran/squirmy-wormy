@@ -2,8 +2,8 @@ package dancesaurus.squirmy_wormy;
 
 import dancesaurus.squirmy_wormy.platform.BiomeSelection;
 import dancesaurus.squirmy_wormy.platform.Services;
-import dancesaurus.squirmy_wormy.registries.EntityAttributes;
-import dancesaurus.squirmy_wormy.registries.EntitySpawnPlacements;
+import dancesaurus.squirmy_wormy.registries.entity.EntityAttributes;
+import dancesaurus.squirmy_wormy.registries.entity.SpawnRestrictions;
 import dancesaurus.squirmy_wormy.registries.VanillaTabModifications;
 import dancesaurus.squirmy_wormy.registries.biome.SpawnModifiers;
 import net.fabricmc.api.ModInitializer;
@@ -33,7 +33,7 @@ public class SquirmyWormyFabric implements ModInitializer {
 			FabricDefaultAttributeRegistry.register(entityType, attributes.get());
 		});
 
-		EntitySpawnPlacements.getAll().forEach((type, props) -> {
+		SpawnRestrictions.getAll().forEach((type, props) -> {
 			EntityType<Mob> entityType = (EntityType<Mob>) type.get();
 			SpawnPlacements.SpawnPredicate<Mob> predicate = (SpawnPlacements.SpawnPredicate<Mob>) props.decoratorPredicate();
 			if (Services.PLATFORM.isDevelopmentEnvironment()) {

@@ -4,10 +4,9 @@ import dancesaurus.squirmy_wormy.entities.Earthworm;
 import dancesaurus.squirmy_wormy.entities.GlowWorm;
 import dancesaurus.squirmy_wormy.platform.BiomeSelection;
 import dancesaurus.squirmy_wormy.platform.LazyResource;
-import dancesaurus.squirmy_wormy.registries.EntityAttributes;
-import dancesaurus.squirmy_wormy.registries.EntitySpawnPlacements;
+import dancesaurus.squirmy_wormy.registries.entity.EntityAttributes;
+import dancesaurus.squirmy_wormy.registries.entity.SpawnRestrictions;
 import dancesaurus.squirmy_wormy.registries.biome.SpawnModifiers;
-import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
@@ -34,7 +33,7 @@ public class ModEntities {
 
 	public static void initialize() {
 		EntityAttributes.register(EARTHWORM, Earthworm::createAttributes);
-		EntitySpawnPlacements.register(
+		SpawnRestrictions.register(
 				EARTHWORM,
 				SpawnPlacements.Type.ON_GROUND,
 				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
@@ -44,7 +43,7 @@ public class ModEntities {
 
 		EntityAttributes.register(GLOW_WORM, GlowWorm::createAttributes);
 
-		EntitySpawnPlacements.register(
+		SpawnRestrictions.register(
 				GLOW_WORM,
 				SpawnPlacements.Type.ON_GROUND,
 				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
