@@ -31,13 +31,13 @@ public class ModBlocks {
 					.noOcclusion()), "glow_worm_web"
 	);
 
-	public static final LazyResource<Block> GLOW_WORM_WOOL = PLATFORM.registerBlockWithItem(
+	public static final LazyResource<Block> GLOWING_WOOL = PLATFORM.registerBlockWithItem(
 			() -> new Block(BlockBehaviour.Properties
 					.copy(Blocks.WHITE_WOOL)
 					.mapColor(MapColor.COLOR_LIGHT_BLUE)
 					.strength(1.0f)
 					.emissiveRendering(ModBlocks::always)
-					.lightLevel(value -> 1)), "glow_worm_wool"
+					.lightLevel(value -> 1)), "glowing_wool"
 	);
 
 	public static final LazyResource<CarpetBlock> GLOWING_CARPET = PLATFORM.registerBlockWithItem(
@@ -49,18 +49,17 @@ public class ModBlocks {
 					.lightLevel(value -> 1)), "glowing_carpet"
 	);
 
-
 	public static void initialize() {
 
 		CompostingChances.register(GLOW_WORM_WEB, 1.0f);
 		VanillaTabModifications.addItemTo(GLOW_WORM_WEB, VanillaTab.NATURAL_BLOCKS);
-		VanillaTabModifications.addItemTo(GLOW_WORM_WOOL, VanillaTab.COLORED_BLOCKS);
+		VanillaTabModifications.addItemTo(GLOWING_WOOL, VanillaTab.COLORED_BLOCKS);
 		VanillaTabModifications.addItemTo(GLOWING_CARPET, VanillaTab.COLORED_BLOCKS);
 	}
 
 	// HACK: Need to make it load after initialization, so I can keep proper track of it.
 	public static void registerFlammableBlocks() {
-		FlammableBlocks.register(GLOW_WORM_WOOL.get(), FlammableBlocks.WOOL_FLAMMABILITY);
+		FlammableBlocks.register(GLOWING_WOOL.get(), FlammableBlocks.WOOL_FLAMMABILITY);
 		FlammableBlocks.register(GLOWING_CARPET.get(), FlammableBlocks.CARPET_FLAMMABILITY);
 	}
 

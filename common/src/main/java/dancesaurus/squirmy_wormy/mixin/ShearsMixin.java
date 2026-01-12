@@ -19,7 +19,7 @@ abstract class ShearsMixin {
     // Checks weather minecraft already speeds up the value
     if (info.getReturnValueF() == 1.0f)
       // TODO: Make glow worm web mine faster. Possibly adding another if statement or adding an else if statement.
-      if (state.is(ModBlocks.GLOW_WORM_WOOL.get())) {
+      if (state.is(ModBlocks.GLOWING_WOOL.get())) {
         info.setReturnValue(5.0f);
 //      } else if (state.is(ModBlocks.GLOW_WORM_WEB)) {
 //        info.setReturnValue(15.0f);
