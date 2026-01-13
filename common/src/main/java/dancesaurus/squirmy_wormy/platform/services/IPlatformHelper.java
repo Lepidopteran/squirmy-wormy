@@ -66,7 +66,7 @@ public interface IPlatformHelper {
 	 * @param name  The identifier or name used for the item registration.
 	 * @return A LazyResource for the registered item, which can be used to retrieve or reference it later.
 	 */
-	default LazyResource<Item> registerItem(Item.Properties props, String name) {
+	default LazyResource<Item> registerItemWithProps(Item.Properties props, String name) {
 		return registerCustomItem(() -> new Item(props), name);
 	}
 
@@ -77,7 +77,7 @@ public interface IPlatformHelper {
 	 * @return A LazyResource for the registered item, which can be used to retrieve or reference it later.
 	 */
 	default LazyResource<Item> registerItem(String name) {
-		return registerItem(new Item.Properties(), name);
+		return registerItemWithProps(new Item.Properties(), name);
 	}
 
 	/**
@@ -122,17 +122,14 @@ public interface IPlatformHelper {
 	 * @param itemProps Properties defining the behavior and attributes of the associated item.
 	 * @return LazyResource for the registered block, allowing access to the block instance.
 	 */
-	default <T extends Block> LazyResource<T> registerBlockWithItem(
+	default <T extends Block> LazyResource<T> registerBlockWithItemProps(
 			Supplier<T> block,
 			String name,
 			Item.Properties itemProps
 	) {
 		LazyResource<T> registeredBlock = registerBlock(block, name);
 
-		registerCustomItem(
-				() -> new BlockItem(registeredBlock.get(), itemProps),
-				name
-		);
+		registerCustomItem(() -> new BlockItem(registeredBlock.get(), itemProps), name);
 
 		return registeredBlock;
 	}
@@ -144,11 +141,8 @@ public interface IPlatformHelper {
 	 * @param name  Identifier or name used for registration of both the block and item.
 	 * @return LazyResource for the registered block, allowing access to the block instance.
 	 */
-	default <T extends Block> LazyResource<T> registerBlockWithItem(
-			Supplier<T> block,
-			String name
-	) {
-		return registerBlockWithItem(block, name, new Item.Properties());
+	default <T extends Block> LazyResource<T> registerBlockWithItem(Supplier<T> block, String name) {
+		return registerBlockWithItemProps(block, name, new Item.Properties());
 	}
 
 	/**

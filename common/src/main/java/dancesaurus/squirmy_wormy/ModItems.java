@@ -15,7 +15,7 @@ import static dancesaurus.squirmy_wormy.platform.Services.PLATFORM;
 
 public class ModItems {
 
-	public static final LazyResource<Item> EARTHWORM = PLATFORM.registerItem(
+	public static final LazyResource<Item> EARTHWORM = PLATFORM.registerItemWithProps(
 			new Properties().food(new FoodProperties.Builder()
 					.fast()
 					.nutrition(1)
@@ -23,7 +23,7 @@ public class ModItems {
 					.build()), "earthworm"
 	);
 
-	public static final LazyResource<Item> FRIED_WORM = PLATFORM.registerItem(
+	public static final LazyResource<Item> FRIED_WORM = PLATFORM.registerItemWithProps(
 			new Properties().food(new FoodProperties.Builder()
 					.fast()
 					.nutrition(1)
