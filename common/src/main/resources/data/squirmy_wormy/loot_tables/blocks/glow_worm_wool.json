@@ -37,7 +37,7 @@
                   ]
                 }
               ],
-              "name": "squirmy_wormy:glow_worm_wool"
+              "name": "squirmy_wormy:glowing_wool"
             },
             {
               "type": "minecraft:item",
@@ -46,7 +46,7 @@
                   "condition": "minecraft:survives_explosion"
                 }
               ],
-              "name": "squirmy_wormy:glow_worm_wool"
+              "name": "squirmy_wormy:glowing_wool"
             }
           ]
         }
@@ -54,5 +54,5 @@
       "rolls": 1.0
     }
   ],
-  "random_sequence": "squirmy_wormy:block/glow_worm_wool"
+  "random_sequence": "squirmy_wormy:block/glowing_wool"
 }
