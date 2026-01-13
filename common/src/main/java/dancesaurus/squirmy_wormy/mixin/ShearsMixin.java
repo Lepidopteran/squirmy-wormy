@@ -17,8 +17,8 @@ abstract class ShearsMixin {
 	private void onGetMiningSpeedMultiplier(ItemStack stack, BlockState state, CallbackInfoReturnable<Float> info) {
 		// Checks weather minecraft already speeds up the value
 		if (info.getReturnValueF() == 1.0f)
-      if (state.is(ModBlocks.GLOWING_WOOL.get())) {
-        info.setReturnValue(5.0f);
+			if (state.is(ModBlocks.GLOWING_WOOL.get())) {
+				info.setReturnValue(5.0f);
 			} else if (state.is(ModBlocks.GLOW_WORM_WEB.get())) {
 				info.setReturnValue(15.0f);
 			}
