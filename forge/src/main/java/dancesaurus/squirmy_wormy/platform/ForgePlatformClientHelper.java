@@ -22,9 +22,6 @@ public class ForgePlatformClientHelper implements IPlatformClientHelper {
 	@Override
 	@SuppressWarnings("deprecation")
 	public <T extends Block> void setBlockRenderType(LazyResource<T> block, RenderType renderType) {
-		ItemBlockRenderTypes.setRenderLayer(
-				ModBlocks.GLOW_WORM_WEB.get(),
-				RenderType.translucent()
-		);
+		ItemBlockRenderTypes.setRenderLayer(block.get(), renderType);
 	}
 }
