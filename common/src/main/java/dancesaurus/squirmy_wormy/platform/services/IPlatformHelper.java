@@ -118,14 +118,14 @@ public interface IPlatformHelper {
 	 * Registers a block along with its corresponding item, using the provided properties for the item.
 	 *
 	 * @param block     Supplier for the block to be registered.
-	 * @param name      Identifier or name used for registration of both the block and item.
 	 * @param itemProps Properties defining the behavior and attributes of the associated item.
+	 * @param name      Identifier or name used for registration of both the block and item.
 	 * @return LazyResource for the registered block, allowing access to the block instance.
 	 */
 	default <T extends Block> LazyResource<T> registerBlockWithItemProps(
 			Supplier<T> block,
-			String name,
-			Item.Properties itemProps
+			Item.Properties itemProps,
+			String name
 	) {
 		LazyResource<T> registeredBlock = registerBlock(block, name);
 
@@ -142,7 +142,7 @@ public interface IPlatformHelper {
 	 * @return LazyResource for the registered block, allowing access to the block instance.
 	 */
 	default <T extends Block> LazyResource<T> registerBlockWithItem(Supplier<T> block, String name) {
-		return registerBlockWithItemProps(block, name, new Item.Properties());
+		return registerBlockWithItemProps(block, new Item.Properties(), name);
 	}
 
 	/**
