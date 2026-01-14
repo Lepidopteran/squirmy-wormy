@@ -1,6 +1,7 @@
 package dancesaurus.squirmy_wormy.platform.services;
 
 import dancesaurus.squirmy_wormy.platform.LazyResource;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -10,13 +11,24 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.Arrays;
+import java.util.Set;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 /**
  * Contains a set of methods that help in handling different operations related to Fabric and Forge.
  */
 public interface IPlatformHelper {
+
+	@FunctionalInterface
+	interface BlockEntityFactory<T> {
+		T create(BlockPos pos, BlockState state);
+	}
 
 	/**
 	 * Gets the name of the current platform
@@ -162,4 +174,23 @@ public interface IPlatformHelper {
 			float width,
 			float height
 	);
+
+	<T extends BlockEntity> LazyResource<BlockEntityType<T>> registerBlockEntityWithSet(
+			String name,
+			BlockEntityFactory<T> factory,
+			Set<LazyResource<? extends Block>> blocks
+	);
+
+	@SuppressWarnings("unchecked")
+	default <T extends BlockEntity> LazyResource<BlockEntityType<T>> registerBlockEntity(
+			String name,
+			BlockEntityFactory<T> factory,
+			LazyResource<? extends Block>... blocks
+	) {
+		return registerBlockEntityWithSet(
+				name,
+				factory,
+				Arrays.stream(blocks).collect(Collectors.toSet())
+		);
+	}
 }

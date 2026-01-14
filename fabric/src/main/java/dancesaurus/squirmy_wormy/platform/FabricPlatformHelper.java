@@ -2,6 +2,7 @@ package dancesaurus.squirmy_wormy.platform;
 
 import dancesaurus.squirmy_wormy.SquirmyWormy;
 import dancesaurus.squirmy_wormy.platform.services.IPlatformHelper;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.fabricmc.loader.api.FabricLoader;
@@ -13,7 +14,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 
+import java.util.Set;
 import java.util.function.Supplier;
 
 public class FabricPlatformHelper implements IPlatformHelper {
@@ -90,6 +94,23 @@ public class FabricPlatformHelper implements IPlatformHelper {
 				FabricEntityTypeBuilder
 						.create(category, factory)
 						.dimensions(EntityDimensions.scalable(width, height))
+						.build()
+		);
+
+		return new LazyResource<>(name, () -> registry);
+	}
+
+	@Override
+	public <T extends BlockEntity> LazyResource<BlockEntityType<T>> registerBlockEntityWithSet(
+			String name,
+			BlockEntityFactory<T> factory,
+			Set<LazyResource<? extends Block>> blocks
+	) {
+		BlockEntityType<T> registry = Registry.register(
+				BuiltInRegistries.BLOCK_ENTITY_TYPE,
+				new ResourceLocation(SquirmyWormy.MOD_ID, name),
+				FabricBlockEntityTypeBuilder
+						.create(factory::create, blocks.stream().map(LazyResource::get).toArray(Block[]::new))
 						.build()
 		);
 

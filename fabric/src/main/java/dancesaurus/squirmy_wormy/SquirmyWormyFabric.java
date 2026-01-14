@@ -23,6 +23,7 @@ public class SquirmyWormyFabric implements ModInitializer {
 		SquirmyWormy.initialize();
 		SquirmyWormy.registerCompostingChances();
 		ModBlocks.registerFlammableBlocks();
+		ModBlockEntities.initialize();
 
 		registerEntityAttributes();
 		registerSpawnRestrictions();
@@ -31,7 +32,6 @@ public class SquirmyWormyFabric implements ModInitializer {
 		modifyVanillaCreativeTabs();
 
 		makeDirtHaveChanceToSpawnEarthworm();
-
 		SquirmyWormy.LOGGER.info("Y O U ' V E  G O T  W O R M S !");
 	}
 

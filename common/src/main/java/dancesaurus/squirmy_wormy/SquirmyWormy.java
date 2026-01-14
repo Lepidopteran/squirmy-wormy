@@ -13,6 +13,7 @@ public final class SquirmyWormy {
 		ModBlocks.initialize();
 		ModItems.initialize();
 		ModEntities.initialize();
+		ModBlockEntities.initialize();
 	}
 
 	public static void registerCompostingChances() {

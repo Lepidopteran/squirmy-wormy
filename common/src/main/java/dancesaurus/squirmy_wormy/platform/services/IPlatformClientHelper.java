@@ -2,10 +2,13 @@ package dancesaurus.squirmy_wormy.platform.services;
 
 import dancesaurus.squirmy_wormy.platform.LazyResource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 
 public interface IPlatformClientHelper {
 
@@ -18,6 +21,17 @@ public interface IPlatformClientHelper {
 	<T extends Entity> void registerEntityRenderer(
 			LazyResource<EntityType<T>> type,
 			EntityRendererProvider<T> renderProvider
+	);
+
+	/**
+	 * Registers a block entity renderer provider for the specified block entity type, allowing the platform to render block entities in the game world.
+	 *
+	 * @param type           A LazyResource providing the block entity type, which defines the type of block entity to render.
+	 * @param renderProvider The block entity renderer provider responsible for supplying the renderer instance for the block entity type.
+	 */
+	<T extends BlockEntity> void registerBlockEntityRenderer(
+			LazyResource<BlockEntityType<T>> type,
+			BlockEntityRendererProvider<T> renderProvider
 	);
 
 	/**

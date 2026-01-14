@@ -10,10 +10,13 @@ import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ComposterBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
 
+import java.util.Set;
 import java.util.function.Supplier;
 
 import static dancesaurus.squirmy_wormy.SquirmyWormyForge.*;
@@ -86,6 +89,23 @@ public class ForgePlatformHelper implements IPlatformHelper {
 						name,
 						() -> EntityType.Builder.of(factory, category).sized(width, height).build(name)
 				)
+		);
+	}
+
+	@Override
+	@SuppressWarnings("DataFlowIssue")
+	public <T extends BlockEntity> LazyResource<BlockEntityType<T>> registerBlockEntityWithSet(
+			String name,
+			BlockEntityFactory<T> factory,
+			Set<LazyResource<? extends Block>> blocks
+	) {
+		return new LazyResource<>(
+				name, BLOCK_ENTITY_TYPES.register(
+				name,
+				() -> BlockEntityType.Builder
+						.of(factory::create, blocks.stream().map(LazyResource::get).toArray(Block[]::new))
+						.build(null)
+		)
 		);
 	}
 }
